@@ -1,0 +1,300 @@
+<!-- tour.html (full replacement) -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A Tour of Zeta – interactive introduction to the syntax and features of the fastest systems programming language.">
+  <meta name="keywords" content="zeta tour, zeta language tutorial, systems programming tour">
+  <meta property="og:title" content="A Tour of Zeta">
+  <meta property="og:description" content="Learn Zeta in minutes: minimalist syntax, extreme performance, and unique features like AI optimization and native WASM.">
+  <meta property="og:image" content="https://z-lang.org/assets/images/z256.png">
+  <meta property="og:url" content="https://z-lang.org/tour.html">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://z-lang.org/tour.html">
+  <title>A Tour of Zeta</title>
+  <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <a href="/" class="logo">
+        <img src="assets/images/z72.png" alt="Zeta Logo" width="72" height="72">
+      </a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <nav id="navMenu">
+        <a href="#features">Features</a>
+        <a href="tour.html">Tour</a>
+        <a href="play.html">Playground</a>
+        <a href="docs.html">Docs</a>
+        <a href="blog.html">Blog</a>
+        <a href="https://github.com/murphsicles/zeta" target="_blank">GitHub</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="container">
+        <img src="assets/images/z180.png" alt="Zeta Logo" class="hero-logo">
+        <h1 style="font-size:3.5rem; margin:2rem 0;">A Tour of Zeta</h1>
+        <p class="tagline" style="font-size:2rem;">Learn the language in minutes</p>
+        <p class="claim" style="max-width:800px; margin:3rem auto;">A hands-on introduction to Zeta's minimalist, high-performance syntax.</p>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <h1 class="section-title">Hello, Zeta!</h1>
+        <p style="max-width:800px; margin:0 auto 2rem; text-align:center; font-size:1.2rem;">
+          Every Zeta program starts with a <code>main</code> function. Save this as <code>hello.z</code>:
+        </p>
+        <div class="example-code">
+          <pre><code><span class="keyword">fn</span> <span class="function">main</span>() {
+    <span class="macro">println!</span>(<span class="string">"Hello, Zeta!"</span>);
+}
+<span class="comment">// → ~7 kB static binary</span>
+<span class="comment">// Zero-cost abstractions</span>
+<span class="comment">// First-principles design</span></code></pre>
+        </div>
+        <p style="max-width:800px; margin:2rem auto; text-align:center;">
+          Compile and run:<br>
+          <code>zeta hello.z</code> → produces <code>a.out</code><br>
+          <code>./a.out</code> → <em>Hello, Zeta!</em>
+        </p>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <h1 class="section-title">Variables & Types</h1>
+        <p style="max-width:800px; margin:0 auto 2rem; text-align:center; font-size:1.2rem;">
+          Variables are immutable by default. Use <code>mut</code> for mutability. Full type inference.
+        </p>
+        <div class="example-code">
+          <pre><code><span class="keyword">let</span> x = <span class="number">42</span>; <span class="comment">// immutable i32 (inferred)</span>
+<span class="keyword">let</span> <span class="keyword">mut</span> y = <span class="number">100</span>; <span class="comment">// mutable</span>
+y += <span class="number">1</span>;
+<span class="keyword">let</span> name: <span class="type">str</span> = <span class="string">"Zeta"</span>; <span class="comment">// explicit owned UTF-8 string</span>
+<span class="keyword">let</span> pi: <span class="type">f64</span> = <span class="number">3.14159</span>;
+<span class="keyword">let</span> flag: <span class="type">bool</span> = <span class="keyword">true</span>;</code></pre>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <h1 class="section-title">Functions</h1>
+        <p style="max-width:800px; margin:0 auto 2rem; text-align:center; font-size:1.2rem;">
+          Functions support full and single-line forms. Explicit return via <code>return</code> or last expression.
+        </p>
+        <div class="example-code">
+          <pre><code><span class="keyword">fn</span> <span class="function">add</span>(a: <span class="type">i32</span>, b: <span class="type">i32</span>) -> <span class="type">i32</span> {
+    <span class="keyword">return</span> a + b;
+}
+<span class="comment">// Single-line form</span>
+<span class="keyword">fn</span> <span class="function">mul</span>(a: <span class="type">i32</span>, b: <span class="type">i32</span>) -> <span class="type">i32</span> = a * b;
+<span class="keyword">let</span> result = <span class="function">add</span>(<span class="function">mul</span>(<span class="number">3</span>, <span class="number">4</span>), <span class="number">5</span>); <span class="comment">// 17</span></code></pre>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <h1 class="section-title">Dictionary Literals</h1>
+        <p style="max-width:800px; margin:0 auto 2rem; text-align:center; font-size:1.2rem;">
+          Built-in heterogeneous maps with concise literals.
+        </p>
+        <div class="example-code">
+          <pre><code><span class="keyword">let</span> config = {
+    <span class="string">"host"</span>: <span class="string">"localhost"</span>,
+    <span class="string">"port"</span>: <span class="number">8080</span>,
+    <span class="string">"debug"</span>: <span class="keyword">true</span>,
+};
+<span class="macro">println!</span>(config[<span class="string">"host"</span>]); <span class="comment">// localhost</span>
+config[<span class="string">"port"</span>] = <span class="number">9090</span>; <span class="comment">// mutable access</span></code></pre>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <h1 class="section-title">Error Propagation</h1>
+        <p style="max-width:800px; margin:0 auto 2rem; text-align:center; font-size:1.2rem;">
+          Simple, expressive error handling with the <code>?</code> operator.
+        </p>
+        <div class="example-code">
+          <pre><code><span class="keyword">fn</span> <span class="function">might_fail</span>() ? <span class="string">"something went wrong"</span> {
+    <span class="comment">// some operation</span>
+}
+<span class="keyword">fn</span> <span class="function">main</span>() {
+    <span class="function">might_fail</span>()?; <span class="comment">// propagates error if any</span>
+    <span class="macro">println!</span>(<span class="string">"success"</span>);
+}</code></pre>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <h1 class="section-title">AI-Driven Optimization</h1>
+        <p style="max-width:800px; margin:0 auto 2rem; text-align:center; font-size:1.2rem;">
+          Unique to Zeta - let Grok rewrite hot code paths at compile time.
+        </p>
+        <div class="example-code">
+          <pre><code>#[ai_opt]
+<span class="keyword">fn</span> <span class="function">heavy_computation</span>(data: <span class="type">vec</span>&lt;<span class="type">f64</span>&gt;) -> <span class="type">f64</span> {
+    <span class="comment">// complex numeric work - Grok may vectorize or fuse</span>
+    data.<span class="function">sum</span>()
+}</code></pre>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <h1 class="section-title">M:N Green-Thread Actors</h1>
+        <p style="max-width:800px; margin:0 auto 2rem; text-align:center; font-size:1.2rem;">
+          Zeta provides lightweight M:N actors with channels. The entire runtime is under 200 LOC and delivers unbeatable concurrency performance.
+        </p>
+        <div class="example-code">
+          <pre><code><span class="keyword">fn</span> <span class="function">main</span>() {
+    <span class="keyword">let</span> (tx, rx) = <span class="macro">channel</span>();
+    <span class="keyword">spawn</span> <span class="keyword">move</span> || {
+        tx.<span class="function">send</span>(<span class="string">"ping"</span>);
+    };
+    <span class="macro">println!</span>(rx.<span class="function">recv</span>()?); <span class="comment">// prints "ping"</span>
+}
+<span class="comment">// 100k ping-pong bench: 0.94 ms (50% faster than competitors)</span></code></pre>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <h1 class="section-title">CacheSafe TBAA</h1>
+        <p style="max-width:800px; margin:0 auto 2rem; text-align:center; font-size:1.2rem;">
+          Zeta's type system enforces strict type-based alias analysis (CacheSafe) automatically, enabling LLVM to apply maximum vectorization and SIMD without manual hints.
+        </p>
+        <div class="example-code">
+          <pre><code><span class="keyword">fn</span> <span class="function">vector_add</span>(a: <span class="keyword">mut</span> [<span class="type">f32</span>], b: [<span class="type">f32</span>]) {
+    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">0</span>..a.<span class="function">len</span>() {
+        a[i] += b[i];
+    }
+}
+<span class="comment">// CacheSafe guarantees no aliasing → LLVM auto-vectorizes fully</span>
+<span class="comment">// No unsafe, no attributes required</span></code></pre>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <h1 class="section-title">Algebraic Semiring CTFE + Fusion</h1>
+        <p style="max-width:800px; margin:0 auto 2rem; text-align:center; font-size:1.2rem;">
+          Compile-time evaluation uses algebraic semiring properties to automatically fuse operations (e.g., map-reduce, matrix chains) into optimal single passes.
+        </p>
+        <div class="example-code">
+          <pre><code><span class="keyword">comptime</span> {
+    <span class="keyword">let</span> data = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];
+    <span class="comment">// x2 map reduction fused into a single loop at compile time</span>
+    <span class="keyword">const</span> TOTAL = data.<span class="function">map</span>(|x| x * <span class="number">2</span>).<span class="function">sum</span>();
+    <span class="macro">println!</span>(TOTAL); <span class="comment">// 30 — computed at compile time</span>
+}</code></pre>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <h1 class="section-title">Targeting WebAssembly</h1>
+        <p style="max-width:800px; margin:0 auto 2rem; text-align:center; font-size:1.2rem;">
+          Zeta compiles natively to WASM. Use the <code>--target wasm32-unknown-unknown</code> flag for browser-ready modules with no runtime.
+        </p>
+        <div class="example-code">
+          <pre><code><span class="keyword">fn</span> <span class="function">main</span>() {
+    <span class="macro">println!</span>(<span class="string">"Hello from Zeta in the browser!"</span>);
+}
+<span class="comment">// Compiles to ~4 kB WASM module</span>
+<span class="comment">// Instantiates instantly, zero overhead</span></code></pre>
+        </div>
+        <p style="max-width:800px; margin:2rem auto; text-align:center;">
+          Try compiling and “running” this exact program in WASM mode in the <a href="play.html" style="color:var(--accent);">Playground</a>.
+        </p>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <h1 class="section-title">What’s Next?</h1>
+        <p style="max-width:800px; margin:0 auto; text-align:center; font-size:1.2rem;">
+          You’ve seen Zeta’s core philosophy in action: extreme minimalism delivering unmatched performance.<br><br>
+          Dive deeper in the <a href="docs.html" style="color:var(--accent);">Documentation</a> or explore the <a href="https://github.com/murphsicles/zeta" style="color:var(--accent);" target="_blank">GitHub repository</a> for the latest source and benchmarks.
+        </p>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <div class="container footer-grid">
+      <div class="footer-column">
+        <h3>Terms & Policies</h3>
+        <ul>
+          <li><a href="conduct.html">Code of Conduct</a></li>
+          <li><a href="licenses.html">Licenses</a></li>
+          <li><a href="logo.html">Logo Policy & Media Guide</a></li>
+          <li><a href="security.html">Security Disclosures</a></li>
+          <li><a href="privacy.html">Privacy Notice</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Get Help</h3>
+        <ul>
+          <li><a href="docs.html">Documentation</a></li>
+          <li><a href="https://github.com/murphsicles/zeta/wiki">Zeta Forge (Contributor Guide)</a></li>
+          <li><a href="https://github.com/murphsicles/zeta/discussions">Users Forum</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Foundation</h3>
+        <ul>
+          <li><a href="get-involved.html">Get Involved</a></li>
+          <li><a href="members.html">Members</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Social</h3>
+        <div class="social-links">
+          <a href="https://github.com/murphsicles/zeta" aria-label="GitHub">
+            <svg viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          </a>
+          <a href="#" aria-label="X (Twitter)">
+            <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a href="#" aria-label="YouTube">
+            <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-column">
+        <h3>Language</h3>
+        <div class="language-selector">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.91-4.33-3.56zm2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2 0-.68.07-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z"/>
+          </svg>
+          <div id="google_translate_element"></div>
+        </div>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <img src="assets/images/z32.png" alt="Zeta" width="24" height="24">
+      <span>Zeta Foundation © 2026</span>
+    </div>
+  </footer>
+  <script src="assets/js/main.js"></script>
+  <script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+    autoDisplay: false,
+    includedLanguages: 'en,zh,ja,ko,fr,de,es,pt,ru,it,nl,pl,sv,ar,hi,tr'
+  }, 'google_translate_element');
+}
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+</html>
