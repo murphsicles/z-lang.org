@@ -214,9 +214,8 @@
     <section class="section" >
       <div class="container">
         <h1 class="section-title">Here's What It Looks Like</h1>
-        <div style="display:flex; flex-wrap:wrap; gap:2rem; justify-content:center; max-width:1000px; margin:0 auto;">
-          <div style="flex:1; min-width:280px; max-width:460px;">
-            <pre style="background:var(--surface); padding:1.5rem; border-radius:8px; overflow-x:auto; font-size:0.9rem; line-height:1.5;"><code>fn fib(n: i64) -> i64 {
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(350px, 1fr)); gap:1.5rem; max-width:1000px; margin:0 auto;">
+          <pre style="background:var(--surface); padding:1.5rem; border-radius:8px; overflow-x:auto; font-size:0.9rem; line-height:1.5; margin:0; display:flex; flex-direction:column; justify-content:center;"><code>fn fib(n: i64) -> i64 {
     if n <= 1 { return n; }
     return fib(n - 1) + fib(n - 2);
 }
@@ -225,9 +224,7 @@ fn main() -> i64 {
     println_i64(fib(40));
     return 0;
 }</code></pre>
-          </div>
-          <div style="flex:1; min-width:280px; max-width:460px;">
-            <pre style="background:var(--surface); padding:1.5rem; border-radius:8px; overflow-x:auto; font-size:0.9rem; line-height:1.5;"><code>struct Point { x: i64, y: i64 }
+          <pre style="background:var(--surface); padding:1.5rem; border-radius:8px; overflow-x:auto; font-size:0.9rem; line-height:1.5; margin:0; display:flex; flex-direction:column; justify-content:center;"><code>struct Point { x: i64, y: i64 }
 
 fn magnitude(p: Point) -> f64 {
     return sqrt((p.x * p.x + p.y * p.y) as f64);
@@ -238,9 +235,7 @@ fn main() -> i64 {
     println_f64(magnitude(p)); // 5.0
     return 0;
 }</code></pre>
-          </div>
-          <div style="flex:1; min-width:280px; max-width:460px;">
-            <pre style="background:var(--surface); padding:1.5rem; border-radius:8px; overflow-x:auto; font-size:0.9rem; line-height:1.5;"><code>const FACTORIAL_10: i64 = comptime {
+          <pre style="background:var(--surface); padding:1.5rem; border-radius:8px; overflow-x:auto; font-size:0.9rem; line-height:1.5; margin:0; display:flex; flex-direction:column; justify-content:center;"><code>const FACTORIAL_10: i64 = comptime {
     fn fact(n: i64) -> i64 {
         if n <= 1 { return 1; }
         return n * fact(n - 1);
@@ -252,9 +247,7 @@ fn main() -> i64 {
     println_i64(FACTORIAL_10); // 3628800
     return 0;
 }</code></pre>
-          </div>
-          <div style="flex:1; min-width:280px; max-width:460px;">
-            <pre style="background:var(--surface); padding:1.5rem; border-radius:8px; overflow-x:auto; font-size:0.9rem; line-height:1.5;"><code>fn main() -> i64 {
+          <pre style="background:var(--surface); padding:1.5rem; border-radius:8px; overflow-x:auto; font-size:0.9rem; line-height:1.5; margin:0; display:flex; flex-direction:column; justify-content:center;"><code>fn main() -> i64 {
     let v = Vec::new();
     v.push(10);
     v.push(20);
@@ -265,7 +258,6 @@ fn main() -> i64 {
     }
     return 0;
 }</code></pre>
-          </div>
         </div>
         <div style="text-align:center; margin-top:3rem;">
           <a href="tour.html" class="btn primary">Take the Tour</a>
