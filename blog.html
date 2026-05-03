@@ -73,7 +73,7 @@
           </p>
 
           <h3 style="color:var(--accent); margin:2rem 0 0.5rem; font-size:1.5rem;">Strong Static Typing with Inference</h3>
-          <pre style="background:var(--code-bg,#1a1a2e); padding:1.5rem; border-radius:8px; overflow-x:auto; margin:1rem 0;"><code>fn add(x: i64, y: i64) -> i64 {
+          <pre style="background:var(--surface); padding:1.5rem; border-radius:8px; overflow-x:auto; margin:1rem 0;"><code>fn add(x: i64, y: i64) -> i64 {
     return x + y;
 }
 
@@ -87,7 +87,7 @@ fn infer() {
           <p style="font-size:1.2rem; margin-bottom:1rem;">
             Structs, enums, tuples — the full toolkit for modeling data without ceremony.
           </p>
-          <pre style="background:var(--code-bg,#1a1a2e); padding:1.5rem; border-radius:8px; overflow-x:auto; margin:1rem 0;"><code>struct Point { x: i64, y: i64 }
+          <pre style="background:var(--surface); padding:1.5rem; border-radius:8px; overflow-x:auto; margin:1rem 0;"><code>struct Point { x: i64, y: i64 }
 
 enum Option&lt;T&gt; {
     Some(T),
@@ -102,7 +102,7 @@ fn origin() -> Point {
           <p style="font-size:1.2rem; margin-bottom:1rem;">
             Parametric polymorphism with concept constraints, monomorphization, and concept-based refinement hierarchies from Stepanov's Elements of Programming.
           </p>
-          <pre style="background:var(--code-bg,#1a1a2e); padding:1.5rem; border-radius:8px; overflow-x:auto; margin:1rem 0;"><code>fn identity&lt;T&gt;(x: T) -> T { return x; }
+          <pre style="background:var(--surface); padding:1.5rem; border-radius:8px; overflow-x:auto; margin:1rem 0;"><code>fn identity&lt;T&gt;(x: T) -> T { return x; }
 
 fn max&lt;T: Ord&gt;(a: T, b: T) -> T {
     if a >= b { return a; }
@@ -113,7 +113,7 @@ fn max&lt;T: Ord&gt;(a: T, b: T) -> T {
           <p style="font-size:1.2rem; margin-bottom:1rem;">
             Functions are values. Closures capture their environment. Higher-order programming is not a library trick — it's baked into the type system.
           </p>
-          <pre style="background:var(--code-bg,#1a1a2e); padding:1.5rem; border-radius:8px; overflow-x:auto; margin:1rem 0;"><code>fn make_adder(n: i64) -> (i64) -> i64 {
+          <pre style="background:var(--surface); padding:1.5rem; border-radius:8px; overflow-x:auto; margin:1rem 0;"><code>fn make_adder(n: i64) -> (i64) -> i64 {
     return fn(x: i64) -> i64 { x + n };
 }</code></pre>
 
@@ -121,7 +121,7 @@ fn max&lt;T: Ord&gt;(a: T, b: T) -> T {
           <p style="font-size:1.2rem; margin-bottom:1rem;">
             Execute arbitrary Zeta code at compile time with <code>comptime</code> blocks. Algebraic semiring fusion enables mathematical optimization during compilation — your runtime gets the result for free.
           </p>
-          <pre style="background:var(--code-bg,#1a1a2e); padding:1.5rem; border-radius:8px; overflow-x:auto; margin:1rem 0;"><code>const FACTORIAL_10: i64 = comptime {
+          <pre style="background:var(--surface); padding:1.5rem; border-radius:8px; overflow-x:auto; margin:1rem 0;"><code>const FACTORIAL_10: i64 = comptime {
     fn fact(n: i64) -> i64 {
         if n <= 1 { return 1; }
         return n * fact(n - 1);
@@ -147,7 +147,7 @@ fn max&lt;T: Ord&gt;(a: T, b: T) -> T {
           <p style="font-size:1.2rem; margin-bottom:2rem;">
             Pass <code>--target wasm32</code> and Zeta compiles straight to WebAssembly through the same LLVM codegen that produces native binaries. No runtime, no polyfills, no JavaScript glue — just a ~4 kB <code>.wasm</code> module that runs in any Wasm runtime.
           </p>
-          <pre style="background:var(--code-bg,#1a1a2e); padding:1.5rem; border-radius:8px; overflow-x:auto; margin:1rem 0;"><code># Same source, two targets:
+          <pre style="background:var(--surface); padding:1.5rem; border-radius:8px; overflow-x:auto; margin:1rem 0;"><code># Same source, two targets:
 ./bin/zetac hello.z -o hello        # native binary
 ./bin/zetac --target wasm32 hello.z -o hello   # WebAssembly</code></pre>
 
@@ -155,7 +155,7 @@ fn max&lt;T: Ord&gt;(a: T, b: T) -> T {
           <p style="font-size:1.2rem; margin-bottom:2rem;">
             Every compiler error has a unique code (E1001–E9015). 175+ distinct codes covering syntax, type mismatches, resolution failures, and codegen issues — each with a human-readable explanation and a suggestion for how to fix it. No more cryptic one-liners in a terminal.
           </p>
-          <pre style="background:var(--code-bg,#1a1a2e); padding:1.5rem; border-radius:8px; overflow-x:auto; margin:1rem 0;"><code>error[E2001]: type mismatch: expected i64, found str
+          <pre style="background:var(--surface); padding:1.5rem; border-radius:8px; overflow-x:auto; margin:1rem 0;"><code>error[E2001]: type mismatch: expected i64, found str
   ┌─ src/main.z:12:13
   │
 7 │     let x: i64 = "hello";
@@ -165,7 +165,7 @@ fn max&lt;T: Ord&gt;(a: T, b: T) -> T {
           <p style="font-size:1.2rem; margin-bottom:2rem;">
             Precondition and postcondition assertions are baked into the language:
           </p>
-          <pre style="background:var(--code-bg,#1a1a2e); padding:1.5rem; border-radius:8px; overflow-x:auto; margin:1rem 0;"><code>fn divide(a: i64, b: i64) -> i64 {
+          <pre style="background:var(--surface); padding:1.5rem; border-radius:8px; overflow-x:auto; margin:1rem 0;"><code>fn divide(a: i64, b: i64) -> i64 {
     pre(b != 0, "division by zero");
     return a / b;
 }</code></pre>
@@ -185,7 +185,7 @@ fn max&lt;T: Ord&gt;(a: T, b: T) -> T {
           </p>
 
           <h2 style="color:var(--accent); margin:3rem 0 1rem; font-size:2rem;">Get Started in 30 Seconds</h2>
-          <pre style="background:var(--code-bg,#1a1a2e); padding:1.5rem; border-radius:8px; overflow-x:auto; margin:1rem 0;"><code>git clone https://github.com/murphsicles/zeta.git
+          <pre style="background:var(--surface); padding:1.5rem; border-radius:8px; overflow-x:auto; margin:1rem 0;"><code>git clone https://github.com/murphsicles/zeta.git
 cd zeta
 ./bin/zetac examples/hello.z -o hello
 ./hello</code></pre>
