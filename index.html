@@ -54,7 +54,7 @@
       </div>
     </section>
 
-    <section class="section" style="background:var(--section-alt,#0f0f1e);">
+    <section class="section" >
       <div class="container">
         <h1 class="section-title">What is Zeta?</h1>
         <p style="text-align:center; max-width:800px; margin:0 auto 2rem; font-size:1.4rem; color:var(--muted);">
@@ -128,7 +128,7 @@
       </div>
     </section>
 
-    <section class="section" style="background:var(--section-alt,#0f0f1e);">
+    <section class="section" >
       <div class="container">
         <h1 class="section-title">Performance</h1>
         <p style="text-align:center; color:var(--muted); margin-bottom:2rem;">Intel i9-13900K · Linux 6.11</p>
@@ -211,12 +211,12 @@
       </div>
     </section>
 
-    <section class="section" style="background:var(--section-alt,#0f0f1e);">
+    <section class="section" >
       <div class="container">
         <h1 class="section-title">Here's What It Looks Like</h1>
         <div style="display:flex; flex-wrap:wrap; gap:2rem; justify-content:center; max-width:1000px; margin:0 auto;">
           <div style="flex:1; min-width:280px; max-width:460px;">
-            <pre style="background:var(--code-bg,#1a1a2e); padding:1.5rem; border-radius:8px; overflow-x:auto; font-size:0.9rem; line-height:1.5;"><code>fn fib(n: i64) -> i64 {
+            <pre style="background:var(--surface); padding:1.5rem; border-radius:8px; overflow-x:auto; font-size:0.9rem; line-height:1.5;"><code>fn fib(n: i64) -> i64 {
     if n <= 1 { return n; }
     return fib(n - 1) + fib(n - 2);
 }
@@ -227,7 +227,7 @@ fn main() -> i64 {
 }</code></pre>
           </div>
           <div style="flex:1; min-width:280px; max-width:460px;">
-            <pre style="background:var(--code-bg,#1a1a2e); padding:1.5rem; border-radius:8px; overflow-x:auto; font-size:0.9rem; line-height:1.5;"><code>struct Point { x: i64, y: i64 }
+            <pre style="background:var(--surface); padding:1.5rem; border-radius:8px; overflow-x:auto; font-size:0.9rem; line-height:1.5;"><code>struct Point { x: i64, y: i64 }
 
 fn magnitude(p: Point) -> f64 {
     return sqrt((p.x * p.x + p.y * p.y) as f64);
@@ -240,7 +240,7 @@ fn main() -> i64 {
 }</code></pre>
           </div>
           <div style="flex:1; min-width:280px; max-width:460px;">
-            <pre style="background:var(--code-bg,#1a1a2e); padding:1.5rem; border-radius:8px; overflow-x:auto; font-size:0.9rem; line-height:1.5;"><code>const FACTORIAL_10: i64 = comptime {
+            <pre style="background:var(--surface); padding:1.5rem; border-radius:8px; overflow-x:auto; font-size:0.9rem; line-height:1.5;"><code>const FACTORIAL_10: i64 = comptime {
     fn fact(n: i64) -> i64 {
         if n <= 1 { return 1; }
         return n * fact(n - 1);
@@ -254,7 +254,7 @@ fn main() -> i64 {
 }</code></pre>
           </div>
           <div style="flex:1; min-width:280px; max-width:460px;">
-            <pre style="background:var(--code-bg,#1a1a2e); padding:1.5rem; border-radius:8px; overflow-x:auto; font-size:0.9rem; line-height:1.5;"><code>fn main() -> i64 {
+            <pre style="background:var(--surface); padding:1.5rem; border-radius:8px; overflow-x:auto; font-size:0.9rem; line-height:1.5;"><code>fn main() -> i64 {
     let v = Vec::new();
     v.push(10);
     v.push(20);
@@ -280,7 +280,7 @@ fn main() -> i64 {
         <p style="text-align:center; max-width:700px; margin:0 auto 2rem; font-size:1.2rem; color:var(--muted);">
           Zero dependencies. Zero package managers. Zero ceremony.
         </p>
-        <pre style="max-width:700px; margin:0 auto; background:var(--code-bg,#1a1a2e); padding:1.5rem; border-radius:8px; overflow-x:auto; font-size:1rem;"><code>git clone https://github.com/murphsicles/zeta.git
+        <pre style="max-width:700px; margin:0 auto; background:var(--surface); padding:1.5rem; border-radius:8px; overflow-x:auto; font-size:1rem;"><code>git clone https://github.com/murphsicles/zeta.git
 cd zeta
 ./bin/zetac examples/hello.z -o hello
 ./hello</code></pre>
