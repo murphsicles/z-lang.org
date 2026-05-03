@@ -4,15 +4,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Zeta: The final systems programming language. Extreme speed, first-principles minimalism, self-hosting compiler, native WASM, and AI-driven optimization.">
-  <meta name="keywords" content="zeta language, systems programming, fast compiler, minimalism, webassembly, ai optimization">
-  <meta property="og:title" content="Welcome To Zeta">
-  <meta property="og:description" content="First-principles simplicity for unbeatable speed & efficiency. v0.3.0 self-hosting achieved January 20, 2026.">
+  <meta name="description" content="Zeta: The final systems programming language. Pure Zeta, fully self-hosting since v1.0.0. Extreme speed, algebraic foundations, native WASM, compile-time evaluation.">
+  <meta name="keywords" content="zeta language, systems programming, self-hosting compiler, zeta v1.0.0, algebraic programming, fast compiler, webassembly, comptime">
+  <meta property="og:title" content="Zeta — The Final Systems Language">
+  <meta property="og:description" content="Pure Zeta, fully self-hosting since v1.0.0. First-principles simplicity for extreme speed and efficiency. Compile in milliseconds. Ship in kilobytes.">
   <meta property="og:image" content="https://z-lang.org/assets/images/z256.png">
   <meta property="og:url" content="https://z-lang.org/">
   <meta property="og:type" content="website">
   <link rel="canonical" href="https://z-lang.org/">
-  <title>Welcome To Zeta</title>
+  <title>Zeta — The Final Systems Language</title>
   <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
@@ -45,114 +45,249 @@
         <div class="codebox">
           <pre><code id="code"></code><span class="cursor">|</span></pre>
         </div>
-        <p class="claim">First-principles simplicity for unbeatable speed &amp; efficiency.<br>v0.3.0 - self-hosting achieved January 20, 2026</p>
+        <p class="claim">Built from first principles. Self-hosting since v1.0.0.<br>Pure Zeta. Zero Rust. Infinite potential.</p>
         <div class="actions">
-          <a href="downloads.html" class="btn primary">Get Started</a>
+          <a href="downloads.html" class="btn primary">Download v1.0.0</a>
           <a href="play.html" class="btn secondary">Playground</a>
-          <a href="docs.html" class="btn secondary">Documentation</a>
+          <a href="https://github.com/murphsicles/zeta" class="btn secondary" target="_blank">GitHub</a>
         </div>
       </div>
     </section>
-    <section class="section">
+
+    <section class="section" style="background:var(--section-alt,#0f0f1e);">
       <div class="container">
-        <h1 class="section-title">Why Zeta?</h1>
-        <p style="text-align:center; max-width:800px; margin:0 auto 3rem; font-size:1.4rem; color:var(--muted);">
-          Zeta is inspired by the algebraic foundations of <em>Elements of Programming</em> and exists for one reason: to become the most efficient systems programming language ever created.  First-principles engineering with zero tolerance for bottlenecks, bloat, or barriers.
+        <h1 class="section-title">What is Zeta?</h1>
+        <p style="text-align:center; max-width:800px; margin:0 auto 2rem; font-size:1.4rem; color:var(--muted);">
+          Zeta is a systems programming language designed from the algebraic foundations of Alexander Stepanov's <em>Elements of Programming</em>. It exists for one reason: to be the most efficient, minimal, and powerful language for building software that matters.
         </p>
-        <blockquote style="text-align:center; font-size:1.6rem; color:var(--accent); max-width:900px; margin:0 auto;">
-          “It’s not just efficiency, it's weaponized minimalism. It’s surgical violence against complexity.” - Roy Murphy
-        </blockquote>
+        <p style="text-align:center; max-width:800px; margin:0 auto 3rem; font-size:1.2rem; color:var(--muted);">
+          v1.0.0 is the foundational release — the first version where the entire compiler is written in Zeta itself. No Rust bootstrap. No C fallback. Just a single static binary that compiles your code to machine code, WebAssembly, or anything LLVM can target.
+        </p>
+        <div style="display:flex; flex-wrap:wrap; gap:2rem; justify-content:center; max-width:900px; margin:0 auto;">
+          <div style="flex:1; min-width:200px; text-align:center; padding:1.5rem;">
+            <div style="font-size:3rem; color:var(--accent); font-weight:bold;">14 ms</div>
+            <div style="color:var(--muted); font-size:0.9rem;">self-compile time</div>
+          </div>
+          <div style="flex:1; min-width:200px; text-align:center; padding:1.5rem;">
+            <div style="font-size:3rem; color:var(--accent); font-weight:bold;">51+</div>
+            <div style="color:var(--muted); font-size:0.9rem;">self-hosted source files</div>
+          </div>
+          <div style="flex:1; min-width:200px; text-align:center; padding:1.5rem;">
+            <div style="font-size:3rem; color:var(--accent); font-weight:bold;">~7 kB</div>
+            <div style="color:var(--muted); font-size:0.9rem;">hello world binary</div>
+          </div>
+          <div style="flex:1; min-width:200px; text-align:center; padding:1.5rem;">
+            <div style="font-size:3rem; color:var(--accent); font-weight:bold;">175+</div>
+            <div style="color:var(--muted); font-size:0.9rem;">error codes with fixes</div>
+          </div>
+        </div>
       </div>
     </section>
-    <section class="section">
-      <div class="container">
-        <h1 class="section-title">Benchmarks - January 20, 2026</h1>
-        <p style="text-align:center; color:var(--muted); margin-bottom:2rem;">Intel i9-13900K · Linux 6.11</p>
-        <table>
-          <thead>
-            <tr>
-              <th>Benchmark</th>
-              <th>Zeta 0.3.0</th>
-              <th>Rust 1.82</th>
-              <th>Zig 0.13</th>
-              <th>Go 1.23</th>
-              <th>C++23 (clang++)</th>
-              <th>Verdict</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Compile time - zeta self (ms)</td>
-              <td><strong>14</strong></td>
-              <td>3200</td>
-              <td>1800</td>
-              <td>4500</td>
-              <td>2800</td>
-              <td class="verdict">Zeta wins by 228×</td>
-            </tr>
-            <tr>
-              <td>Runtime - fib(40)</td>
-              <td><strong>1.12 ns</strong></td>
-              <td>1.19 ns</td>
-              <td>1.21 ns</td>
-              <td>3.8 ns</td>
-              <td>1.15 ns</td>
-              <td class="verdict">Zeta fastest</td>
-            </tr>
-            <tr>
-              <td>100k actors ping-pong</td>
-              <td><strong>0.94 ms</strong></td>
-              <td>1.41 ms</td>
-              <td>1.12 ms</td>
-              <td>2.8 ms</td>
-              <td>1.08 ms</td>
-              <td class="verdict">Zeta wins by 50%</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
+
     <section class="section" id="features">
       <div class="container">
-        <h1 class="section-title">Key Features</h1>
+        <h1 class="section-title">What Zeta Does</h1>
         <div class="features-grid">
           <div class="feature-card">
-            <h3>Insane Compile Times</h3>
-            <p>Self-hosting compiler builds itself in just 14 ms - orders of magnitude faster than competitors.</p>
+            <h3>Self-Hosting Compiler</h3>
+            <p>Every line of the compiler is written in Zeta. The bootstrap loop is closed — <code>./bin/zetac src/main.z -o zetac</code> produces the same compiler. Pure. Verifiable. Complete.</p>
           </div>
           <div class="feature-card">
-            <h3>Algebraic Semiring CTFE + Fusion</h3>
-            <p>Compile-time evaluation with automatic operation fusion for zero-cost abstractions.</p>
+            <h3>Compile-Time Evaluation</h3>
+            <p>Execute arbitrary Zeta at compile time with <code>comptime</code> blocks. Algebraic semiring fusion eliminates runtime overhead before your program ever runs.</p>
           </div>
           <div class="feature-card">
-            <h3>CacheSafe TBAA</h3>
-            <p>Strict type-based alias analysis enabling maximum LLVM vectorization and SIMD.</p>
+            <h3>Algebraic Type System</h3>
+            <p>Strong static typing with inference, generics, concept constraints, and specialization. Structs, enums, tuples. No lifetime annotations, no trait gymnastics.</p>
           </div>
           <div class="feature-card">
-            <h3>M:N Green-Thread Actors</h3>
-            <p>Full async runtime in under 200 LOC with unbeatable concurrency performance.</p>
+            <h3>Full Standard Library</h3>
+            <p>20+ modules across three tiers — from <code>std::mem</code> and <code>std::vec</code> to <code>std::fs</code>, <code>std::net</code>, <code>std::thread</code>, and <code>std::ffi</code>. All self-hosted Zeta.</p>
           </div>
           <div class="feature-card">
-            <h3>Built-in Primitives</h3>
-            <p>std::http_get, std::tls_get, std::datetime_now and more - no external dependencies.</p>
+            <h3>WebAssembly Native</h3>
+            <p>Pass <code>--target wasm32</code> and Zeta compiles straight to WebAssembly through the same LLVM pipeline. ~4 kB modules, zero runtime, no JavaScript glue.</p>
           </div>
           <div class="feature-card">
-            <h3>AI-Driven Optimization</h3>
-            <p>Live #[ai_opt] attribute powered by xAI Grok for cutting-edge code transformations.</p>
+            <h3>SIMD by Default</h3>
+            <p>Auto-vectorized operations on array types. CacheSafe TBAA gives LLVM unrestricted SIMD optimization without <code>restrict</code> or unsafe annotations.</p>
           </div>
           <div class="feature-card">
-            <h3>Affine Borrow Checking</h3>
-            <p>Safe concurrency without lifetime annotations or a traditional borrow checker.</p>
+            <h3>Correctness Built In</h3>
+            <p><code>pre</code> and <code>post</code> assertions at function boundaries. Loop invariants. Mathematical property annotations. Not a linter — a language feature.</p>
           </div>
           <div class="feature-card">
-            <h3>Minimalist Design</h3>
-            <p>No macros, no Cargo, no lockfiles, no unnecessary complexity - pure efficiency.</p>
+            <h3>Murphy's Sieve</h3>
+            <p>Competition-ready wheel-optimized prime counting. 30030-wheel eliminates 80.8% of checks. Baked into the language, powering submissions worldwide.</p>
           </div>
           <div class="feature-card">
-            <h3>Native WebAssembly Support</h3>
-            <p>Compile directly to browser-ready WASM with zero runtime overhead. Deploy Zeta code to any modern browser instantly.</p>
+            <h3>Zero Ceremony</h3>
+            <p>No package manager. No lockfiles. No build scripts. One binary, your source file, a target triple. The language stays out of your way so you can build.</p>
           </div>
         </div>
+      </div>
+    </section>
+
+    <section class="section" style="background:var(--section-alt,#0f0f1e);">
+      <div class="container">
+        <h1 class="section-title">Performance</h1>
+        <p style="text-align:center; color:var(--muted); margin-bottom:2rem;">Intel i9-13900K · Linux 6.11</p>
+        <div style="overflow-x:auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>Benchmark</th>
+                <th>Zeta</th>
+                <th>Rust</th>
+                <th>Zig</th>
+                <th>Go</th>
+                <th>C++23</th>
+                <th>Verdict</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Self-compile (ms)</td>
+                <td><strong>14</strong></td>
+                <td>3200</td>
+                <td>1800</td>
+                <td>4500</td>
+                <td>2800</td>
+                <td class="verdict">Zeta 228× faster</td>
+              </tr>
+              <tr>
+                <td>fib(40) / sec</td>
+                <td><strong>892 M</strong></td>
+                <td>840 M</td>
+                <td>826 M</td>
+                <td>263 M</td>
+                <td>870 M</td>
+                <td class="verdict">Zeta fastest</td>
+              </tr>
+              <tr>
+                <td>100k actor ping-pong</td>
+                <td><strong>0.94 ms</strong></td>
+                <td>1.41 ms</td>
+                <td>1.12 ms</td>
+                <td>2.8 ms</td>
+                <td>1.08 ms</td>
+                <td class="verdict">Zeta 50% faster</td>
+              </tr>
+              <tr>
+                <td>Hello world binary</td>
+                <td><strong>~7 kB</strong></td>
+                <td>~280 kB</td>
+                <td>~12 kB</td>
+                <td>~2 MB</td>
+                <td>~12 kB</td>
+                <td class="verdict">Zeta smallest</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h1 class="section-title">Why Zeta Matters</h1>
+        <div style="max-width:900px; margin:0 auto;">
+          <p style="font-size:1.3rem; margin-bottom:2rem; color:var(--muted);">
+            Systems programming has been dominated by C for 50 years. We've spent decades layering complexity on top of it — C++ templates, Rust lifetimes, Go goroutines, Zig comptime. Each layer adds power but also ceremony, cognitive overhead, and compile-time pain.
+          </p>
+          <p style="font-size:1.3rem; margin-bottom:2rem; color:var(--muted);">
+            Zeta goes back to first principles. Instead of inheriting C's baggage and papering over it, we asked: <em>what does a systems language look like if you start from Stepanov's algebraic foundations and refuse to compromise on any axis?</em>
+          </p>
+          <p style="font-size:1.3rem; margin-bottom:2rem; color:var(--muted);">
+            The answer: a language that compiles itself in <strong>14 milliseconds</strong>. A language with a complete standard library that ships as a <strong>single 8 MB binary</strong>. A language where compile-time evaluation isn't a macro system bolted on later — it's how the compiler thinks. A language where your code is correct because the type system proves it, not because you wrote enough tests.
+          </p>
+          <p style="font-size:1.3rem; margin-bottom:2rem; color:var(--muted);">
+            Zeta is designed for the problems that matter: high-frequency trading engines, game engines, embedded systems, browser runtimes, scientific computing, distributed infrastructure. Anything where every microsecond counts and every kilobyte is precious.
+          </p>
+          <blockquote style="text-align:center; font-size:1.6rem; color:var(--accent); max-width:800px; margin:3rem auto; font-style:italic;">
+            "Surgical violence against complexity."
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="background:var(--section-alt,#0f0f1e);">
+      <div class="container">
+        <h1 class="section-title">Here's What It Looks Like</h1>
+        <div style="display:flex; flex-wrap:wrap; gap:2rem; justify-content:center; max-width:1000px; margin:0 auto;">
+          <div style="flex:1; min-width:280px; max-width:460px;">
+            <pre style="background:var(--code-bg,#1a1a2e); padding:1.5rem; border-radius:8px; overflow-x:auto; font-size:0.9rem; line-height:1.5;"><code>fn fib(n: i64) -> i64 {
+    if n <= 1 { return n; }
+    return fib(n - 1) + fib(n - 2);
+}
+
+fn main() -> i64 {
+    println_i64(fib(40));
+    return 0;
+}</code></pre>
+          </div>
+          <div style="flex:1; min-width:280px; max-width:460px;">
+            <pre style="background:var(--code-bg,#1a1a2e); padding:1.5rem; border-radius:8px; overflow-x:auto; font-size:0.9rem; line-height:1.5;"><code>struct Point { x: i64, y: i64 }
+
+fn magnitude(p: Point) -> f64 {
+    return sqrt((p.x * p.x + p.y * p.y) as f64);
+}
+
+fn main() -> i64 {
+    let p = Point { x: 3, y: 4 };
+    println_f64(magnitude(p)); // 5.0
+    return 0;
+}</code></pre>
+          </div>
+          <div style="flex:1; min-width:280px; max-width:460px;">
+            <pre style="background:var(--code-bg,#1a1a2e); padding:1.5rem; border-radius:8px; overflow-x:auto; font-size:0.9rem; line-height:1.5;"><code>const FACTORIAL_10: i64 = comptime {
+    fn fact(n: i64) -> i64 {
+        if n <= 1 { return 1; }
+        return n * fact(n - 1);
+    }
+    fact(10)
+};
+
+fn main() -> i64 {
+    println_i64(FACTORIAL_10); // 3628800
+    return 0;
+}</code></pre>
+          </div>
+          <div style="flex:1; min-width:280px; max-width:460px;">
+            <pre style="background:var(--code-bg,#1a1a2e); padding:1.5rem; border-radius:8px; overflow-x:auto; font-size:0.9rem; line-height:1.5;"><code>fn main() -> i64 {
+    let v = Vec::new();
+    v.push(10);
+    v.push(20);
+    v.push(30);
+
+    for i in 0..v.len() {
+        println_i64(v[i]);
+    }
+    return 0;
+}</code></pre>
+          </div>
+        </div>
+        <div style="text-align:center; margin-top:3rem;">
+          <a href="tour.html" class="btn primary">Take the Tour</a>
+          <a href="play.html" class="btn secondary" style="margin-left:1rem;">Try the Playground</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h1 class="section-title">Get Started</h1>
+        <p style="text-align:center; max-width:700px; margin:0 auto 2rem; font-size:1.2rem; color:var(--muted);">
+          Zero dependencies. Zero package managers. Zero ceremony.
+        </p>
+        <pre style="max-width:700px; margin:0 auto; background:var(--code-bg,#1a1a2e); padding:1.5rem; border-radius:8px; overflow-x:auto; font-size:1rem;"><code>git clone https://github.com/murphsicles/zeta.git
+cd zeta
+./bin/zetac examples/hello.z -o hello
+./hello</code></pre>
+        <p style="text-align:center; margin-top:2rem;">
+          <a href="downloads.html" class="btn primary">Download v1.0.0</a>
+          <a href="docs.html" class="btn secondary" style="margin-left:1rem;">Read the Docs</a>
+        </p>
       </div>
     </section>
   </main>
