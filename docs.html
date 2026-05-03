@@ -4,17 +4,219 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Zeta Documentation – comprehensive reference for the final systems programming language with extreme performance and minimalism.">
-  <meta name="keywords" content="zeta docs, zeta language reference, systems programming documentation">
-  <meta property="og:title" content="Zeta Documentation">
-  <meta property="og:description" content="Official documentation for Zeta v0.3.0 - the fastest self-hosting systems language.">
+  <meta name="description" content="Zeta v1.0.0 Documentation — comprehensive reference for syntax, types, functions, standard library, CTFE, WebAssembly, and more.">
+  <meta name="keywords" content="zeta docs, zeta language reference, zeta syntax, zeta standard library, systems programming documentation">
+  <meta property="og:title" content="Zeta v1.0.0 Documentation">
+  <meta property="og:description" content="Complete reference for the Zeta programming language: types, functions, control flow, generics, standard library, comptime, WASM, and more.">
   <meta property="og:image" content="https://z-lang.org/assets/images/z256.png">
   <meta property="og:url" content="https://z-lang.org/docs.html">
   <meta property="og:type" content="website">
   <link rel="canonical" href="https://z-lang.org/docs.html">
-  <title>Zeta Documentation</title>
+  <title>Zeta v1.0.0 Documentation</title>
   <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    :root {
+      --sidebar-w: 260px;
+    }
+    body {
+      margin: 0;
+    }
+    .docs-layout {
+      display: flex;
+      min-height: calc(100vh - 80px);
+    }
+    .docs-sidebar {
+      position: sticky;
+      top: 0;
+      width: var(--sidebar-w);
+      height: 100vh;
+      overflow-y: auto;
+      background: var(--surface);
+      border-right: 1px solid rgba(255,255,255,0.05);
+      padding: 1.5rem 0;
+      flex-shrink: 0;
+      z-index: 10;
+    }
+    .docs-sidebar::-webkit-scrollbar {
+      width: 4px;
+    }
+    .docs-sidebar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .docs-sidebar::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,0.1);
+      border-radius: 4px;
+    }
+    .docs-sidebar h3 {
+      color: var(--accent);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 0 1.25rem;
+      margin: 1.25rem 0 0.5rem;
+    }
+    .docs-sidebar h3:first-child {
+      margin-top: 0;
+    }
+    .docs-sidebar a {
+      display: block;
+      padding: 0.35rem 1.25rem;
+      color: var(--muted, #8b949e);
+      font-size: 0.875rem;
+      text-decoration: none;
+      transition: color 0.15s, background 0.15s;
+      border-left: 2px solid transparent;
+    }
+    .docs-sidebar a:hover,
+    .docs-sidebar a:focus {
+      color: var(--accent);
+      background: rgba(88,166,255,0.05);
+      border-left-color: var(--accent);
+    }
+    .docs-sidebar a.sub {
+      padding-left: 2rem;
+      font-size: 0.8rem;
+    }
+    .docs-main {
+      flex: 1;
+      min-width: 0;
+      padding: 2rem 3rem 4rem;
+      max-width: 1000px;
+    }
+    .docs-main h2 {
+      color: var(--accent);
+      font-size: 2rem;
+      margin: 3rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      scroll-margin-top: 1.5rem;
+    }
+    .docs-main h2:first-of-type {
+      margin-top: 0;
+    }
+    .docs-main h3 {
+      color: var(--text, #e6edf3);
+      font-size: 1.35rem;
+      margin: 2rem 0 0.75rem;
+      scroll-margin-top: 1.5rem;
+    }
+    .docs-main h4 {
+      color: var(--text, #e6edf3);
+      font-size: 1.1rem;
+      margin: 1.5rem 0 0.5rem;
+    }
+    .docs-main p, .docs-main li {
+      color: var(--muted, #8b949e);
+      font-size: 1rem;
+      line-height: 1.7;
+      margin-bottom: 0.75rem;
+    }
+    .docs-main ul, .docs-main ol {
+      padding-left: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--muted, #8b949e);
+    }
+    .docs-main li {
+      margin-bottom: 0.4rem;
+    }
+    .docs-main code {
+      background: rgba(255,255,255,0.06);
+      padding: 0.15em 0.4em;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: var(--accent);
+    }
+    .docs-main pre {
+      background: var(--surface) !important;
+      padding: 1.25rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin: 1rem 0 1.5rem;
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+    .docs-main pre code {
+      background: none;
+      padding: 0;
+      color: var(--text, #e6edf3);
+    }
+    .docs-main .keyword { color: #F92672; }
+    .docs-main .function { color: #A6E22E; }
+    .docs-main .type { color: #66D9EF; }
+    .docs-main .string { color: #E6DB74; }
+    .docs-main .number { color: #AE81FF; }
+    .docs-main .comment { color: #75715E; font-style: italic; }
+    .docs-main .builtin { color: #FD971F; }
+    .docs-main .macro { color: #66D9EF; }
+    .docs-main table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: 0.9rem;
+    }
+    .docs-main th, .docs-main td {
+      text-align: left;
+      padding: 0.6rem 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .docs-main th {
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .docs-main td {
+      color: var(--muted, #8b949e);
+    }
+    .docs-main blockquote {
+      border-left: 3px solid var(--accent);
+      padding-left: 1.25rem;
+      margin: 1.5rem 0;
+      color: var(--muted, #8b949e);
+      font-style: italic;
+    }
+    .docs-main .note {
+      background: rgba(88,166,255,0.08);
+      border-left: 3px solid var(--accent);
+      padding: 0.75rem 1rem;
+      border-radius: 0 6px 6px 0;
+      margin: 1rem 0 1.5rem;
+      font-size: 0.9rem;
+      color: var(--muted, #8b949e);
+    }
+    .docs-main .tip {
+      background: rgba(166,226,46,0.08);
+      border-left: 3px solid #A6E22E;
+      padding: 0.75rem 1rem;
+      border-radius: 0 6px 6px 0;
+      margin: 1rem 0 1.5rem;
+      font-size: 0.9rem;
+      color: var(--muted, #8b949e);
+    }
+    .method-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 0.5rem;
+      margin: 0.75rem 0 1.25rem;
+    }
+    .method-item {
+      background: var(--surface);
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+    }
+    .method-item code {
+      font-size: 0.85em;
+    }
+
+    @media (max-width: 768px) {
+      .docs-sidebar { display: none; }
+      .docs-main { padding: 1.5rem; }
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -28,7 +230,7 @@
         <span></span>
       </button>
       <nav id="navMenu">
-        <a href="#features">Features</a>
+        <a href="index.html#features">Features</a>
         <a href="tour.html">Tour</a>
         <a href="play.html">Playground</a>
         <a href="docs.html">Docs</a>
@@ -37,96 +239,835 @@
       </nav>
     </div>
   </header>
-  <main>
-    <section class="hero">
-      <div class="container">
-        <img src="assets/images/z180.png" alt="Zeta Logo" class="hero-logo">
-        <h1 style="font-size:3rem; margin:2rem 0;">Zeta Documentation</h1>
-        <p class="claim">v0.3.0 - self-hosting achieved January 20, 2026</p>
-        <div class="actions" style="margin-top:3rem;">
-          <a href="play.html" class="btn primary">Open Playground</a>
-          <a href="tour.html" class="btn secondary">Take the Tour</a>
-        </div>
+  <div class="docs-layout">
+    <aside class="docs-sidebar">
+      <h3>Getting Started</h3>
+      <a href="#install">Installation</a>
+      <a href="#hello-world">Hello World</a>
+      <a href="#compile">Compilation</a>
+
+      <h3>Language Reference</h3>
+      <a href="#comments">Comments</a>
+      <a href="#variables">Variables</a>
+      <a href="#types">Types</a>
+      <a href="#functions">Functions</a>
+      <a href="#control-flow">Control Flow</a>
+      <a href="#match">Match</a>
+      <a href="#structs">Structs</a>
+      <a href="#enums">Enums</a>
+      <a href="#tuples">Tuples</a>
+      <a href="#arrays">Arrays &amp; Slices</a>
+      <a href="#generics">Generics</a>
+      <a href="#concepts">Concepts</a>
+      <a href="#memory">Memory Model</a>
+      <a href="#correctness">Correctness</a>
+      <a href="#attributes">Attributes</a>
+
+      <h3>Standard Library</h3>
+      <a href="#stdlib-overview">Overview</a>
+      <a href="#stdlib-mem" class="sub">std::mem</a>
+      <a href="#stdlib-vec" class="sub">std::vec</a>
+      <a href="#stdlib-string" class="sub">std::string</a>
+      <a href="#stdlib-fs" class="sub">std::fs</a>
+      <a href="#stdlib-net" class="sub">std::net</a>
+      <a href="#stdlib-sync" class="sub">std::sync</a>
+      <a href="#stdlib-time" class="sub">std::time</a>
+      <a href="#stdlib-iter" class="sub">std::iter</a>
+
+      <h3>Advanced</h3>
+      <a href="#comptime">CTFE</a>
+      <a href="#wasm">WebAssembly</a>
+      <a href="#simd">SIMD</a>
+      <a href="#actors">Actors</a>
+      <a href="#ffi">FFI</a>
+      <a href="#sieve">Murphy's Sieve</a>
+      <a href="#pipeline">Compiler Pipeline</a>
+      <a href="#errors">Error Codes</a>
+    </aside>
+
+    <main class="docs-main">
+      <h2 id="install">Installation</h2>
+      <p>
+        Zeta v1.0.0 ships as a single static binary with zero dependencies. Clone the repository and the compiler is ready to go:
+      </p>
+      <pre><code>git clone https://github.com/murphsicles/zeta.git
+cd zeta
+./bin/zetac --help</code></pre>
+      <div class="note">
+        <strong>Note:</strong> The pre-built binary is for Linux x86-64. To compile from source, ensure LLVM 18+ is installed as a system library.
       </div>
-    </section>
-    <section class="section">
-      <div class="container">
-        <h1 class="section-title">Introduction</h1>
-        <p style="max-width:900px; margin:0 auto 2rem; font-size:1.2rem; text-align: center;">
-          Zeta is a systems programming language inspired by the algebraic foundations of <em>Elements of Programming</em> by Alexander Stepanov.  It exists for one reason: to become the most efficient systems programming language ever created.  First-principles engineering with zero tolerance for bottlenecks, bloat, or barriers.
-        </p>
-        <blockquote style="text-align:center; font-size:1.6rem; color:var(--accent); max-width:900px; margin:2rem auto;">
-          “Complexity assertions have to be part of the interface.” — Alexander Stepanov, 1995
-        </blockquote>
+      <p>
+        Once you have the compiler, you can verify it works:
+      </p>
+      <pre><code>./bin/zetac examples/hello.z -o hello
+./hello
+# Output: Hello, Zeta!</code></pre>
+
+      <!-- ─── Hello World ─── -->
+      <h2 id="hello-world">Hello World</h2>
+      <p>
+        Every Zeta program begins with a <code>main</code> function. It returns <code>i64</code> (the exit code) and is the entry point the runtime calls.
+      </p>
+      <pre><code><span class="keyword">fn</span> <span class="function">main</span>() -> <span class="type">i64</span> {
+    <span class="function">println_str</span>(<span class="string">"Hello, Zeta!"</span>);
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</code></pre>
+      <p>
+        <code>println_str</code> prints a string to stdout. Zeta provides several built-in print functions: <code>println_str</code>, <code>println_i64</code>, <code>println_f64</code>, <code>println_bool</code>.
+      </p>
+      <p>
+        Save to <code>hello.z</code>, compile with <code>./bin/zetac hello.z -o hello</code>, and run with <code>./hello</code>.
+      </p>
+
+      <!-- ─── Compilation ─── -->
+      <h2 id="compile">Compilation</h2>
+      <p>
+        The Zeta compiler accepts source files and produces native executables or WebAssembly modules.
+      </p>
+      <table>
+        <thead>
+          <tr><th>Flag</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>-o &lt;file&gt;</code></td><td>Output file path</td></tr>
+          <tr><td><code>--target wasm32</code></td><td>Compile to WebAssembly</td></tr>
+          <tr><td><code>--bootstrap</code></td><td>Self-hosting bootstrap mode</td></tr>
+          <tr><td><code>--help</code></td><td>Print usage information</td></tr>
+        </tbody>
+      </table>
+      <pre><code><span class="comment"># Compile to native binary</span>
+./bin/zetac hello.z -o hello
+
+<span class="comment"># Compile to WebAssembly</span>
+./bin/zetac --target wasm32 hello.z -o hello.wasm
+
+<span class="comment"># Self-hosting bootstrap (compile the compiler)</span>
+./bin/zetac src/main.z -o zetac</code></pre>
+      <p>
+        The compiler itself compiles in approximately <strong>14 ms</strong> on modern hardware. Output binaries are typically a few kilobytes.
+      </p>
+
+      <!-- ─── Comments ─── -->
+      <h2 id="comments">Comments</h2>
+      <p>
+        Zeta uses C-style line comments. There are no block comments.
+      </p>
+      <pre><code><span class="comment">// This is a single-line comment</span>
+<span class="keyword">let</span> x = <span class="number">42</span>;  <span class="comment">// inline comment</span>
+
+<span class="comment">// Comments can span multiple lines</span>
+<span class="comment">// like this. There is no /* ... */ syntax.</span></code></pre>
+
+      <!-- ─── Variables ─── -->
+      <h2 id="variables">Variables</h2>
+
+      <h3>let bindings</h3>
+      <p>
+        Variables are introduced with <code>let</code>. They are <strong>immutable by default</strong> — once bound, they cannot be reassigned.
+      </p>
+      <pre><code><span class="keyword">let</span> x = <span class="number">42</span>;       <span class="comment">// immutable i64</span>
+x = <span class="number">43</span>;            <span class="comment">// ❌ compiler error — x is immutable</span></code></pre>
+
+      <h3>Mutability</h3>
+      <p>
+        Use <code>mut</code> to make a variable mutable:
+      </p>
+      <pre><code><span class="keyword">let</span> <span class="keyword">mut</span> counter = <span class="number">0</span>;
+counter += <span class="number">1</span>;    <span class="comment">// ✅ allowed</span>
+counter = <span class="number">100</span>;    <span class="comment">// ✅ allowed</span></code></pre>
+
+      <h3>Type Inference</h3>
+      <p>
+        Zeta infers types from the assigned value. Explicit type annotations can override inference:
+      </p>
+      <pre><code><span class="keyword">let</span> a = <span class="number">42</span>;              <span class="comment">// inferred i64</span>
+<span class="keyword">let</span> b = <span class="number">3.14</span>;            <span class="comment">// inferred f64</span>
+<span class="keyword">let</span> c: <span class="type">i64</span> = <span class="number">99</span>;        <span class="comment">// explicit i64</span>
+<span class="keyword">let</span> d: <span class="type">f64</span> = <span class="number">42</span>;        <span class="comment">// i64 literal promoted to f64</span></code></pre>
+
+      <h3>Constants</h3>
+      <p>
+        <code>const</code> declares a compile-time constant. The value must be determinable at compile time.
+      </p>
+      <pre><code><span class="keyword">const</span> MAX_COUNT: <span class="type">i64</span> = <span class="number">1000</span>;
+<span class="keyword">const</span> NAME = <span class="string">"Zeta"</span>;        <span class="comment">// type inferred</span></code></pre>
+
+      <!-- ─── Types ─── -->
+      <h2 id="types">Types</h2>
+
+      <h3>Primitive Types</h3>
+      <table>
+        <thead>
+          <tr><th>Type</th><th>Description</th><th>Example</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>i64</code></td><td>Signed 64-bit integer</td><td><code>42</code>, <code>-1</code>, <code>0</code></td></tr>
+          <tr><td><code>f64</code></td><td>Double-precision floating point</td><td><code>3.14</code>, <code>-0.5</code></td></tr>
+          <tr><td><code>bool</code></td><td>Boolean</td><td><code>true</code>, <code>false</code></td></tr>
+          <tr><td><code>str</code></td><td>UTF-8 string (immutable, owned)</td><td><code>"hello"</code></td></tr>
+        </tbody>
+      </table>
+
+      <h3>Compound Types</h3>
+      <table>
+        <thead>
+          <tr><th>Type</th><th>Description</th><th>Example</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>[T; N]</code></td><td>Fixed-size array</td><td><code>[1, 2, 3]</code></td></tr>
+          <tr><td><code>(T, U)</code></td><td>Tuple</td><td><code>(42, "hello")</code></td></tr>
+          <tr><td><code>fn(T) -> U</code></td><td>Function pointer type</td><td><code>fn(i64) -> i64</code></td></tr>
+        </tbody>
+      </table>
+
+      <h3>Type Casting</h3>
+      <p>
+        Use the <code>as</code> keyword for explicit type conversion:
+      </p>
+      <pre><code><span class="keyword">let</span> x: <span class="type">f64</span> = <span class="number">42</span>;           <span class="comment">// i64 → f64</span>
+<span class="keyword">let</span> y = (x * <span class="number">2.0</span>) <span class="keyword">as</span> <span class="type">i64</span>;  <span class="comment">// f64 → i64</span></code></pre>
+
+      <!-- ─── Functions ─── -->
+      <h2 id="functions">Functions</h2>
+
+      <h3>Named Functions</h3>
+      <p>
+        Functions are declared with <code>fn</code>, followed by the name, parameters, return type, and body.
+      </p>
+      <pre><code><span class="keyword">fn</span> <span class="function">add</span>(a: <span class="type">i64</span>, b: <span class="type">i64</span>) -> <span class="type">i64</span> {
+    <span class="keyword">return</span> a + b;
+}</code></pre>
+
+      <h3>Return Values</h3>
+      <p>
+        Use <code>return</code> to exit early, or let the last expression serve as the return value:
+      </p>
+      <pre><code><span class="keyword">fn</span> <span class="function">square</span>(x: <span class="type">i64</span>) -> <span class="type">i64</span> {
+    x * x  <span class="comment">// last expression is the return value</span>
+}
+
+<span class="keyword">fn</span> <span class="function">abs</span>(x: <span class="type">i64</span>) -> <span class="type">i64</span> {
+    <span class="keyword">if</span> x >= <span class="number">0</span> {
+        <span class="keyword">return</span> x;  <span class="comment">// early return</span>
+    }
+    -x
+}</code></pre>
+
+      <h3>First-Class Functions</h3>
+      <p>
+        Functions are values. They can be passed as arguments, returned from other functions, and bound to variables.
+      </p>
+      <pre><code><span class="keyword">fn</span> <span class="function">apply</span>(f: (<span class="type">i64</span>) -> <span class="type">i64</span>, x: <span class="type">i64</span>) -> <span class="type">i64</span> {
+    <span class="keyword">return</span> f(x);
+}
+
+<span class="keyword">let</span> result = <span class="function">apply</span>(<span class="function">square</span>, <span class="number">5</span>);  <span class="comment">// 25</span></code></pre>
+
+      <h3>Closures</h3>
+      <p>
+        Anonymous functions capture variables from their enclosing scope. The syntax is <code>fn(params) { body }</code>.
+      </p>
+      <pre><code><span class="keyword">fn</span> <span class="function">make_adder</span>(n: <span class="type">i64</span>) -> (<span class="type">i64</span>) -> <span class="type">i64</span> {
+    <span class="keyword">return</span> <span class="keyword">fn</span>(x: <span class="type">i64</span>) -> <span class="type">i64</span> {
+        x + n  <span class="comment">// n is captured from the enclosing scope</span>
+    };
+}
+
+<span class="keyword">let</span> add5 = <span class="function">make_adder</span>(<span class="number">5</span>);
+<span class="keyword">let</span> y = add5(<span class="number">10</span>);  <span class="comment">// 15</span></code></pre>
+
+      <!-- ─── Control Flow ─── -->
+      <h2 id="control-flow">Control Flow</h2>
+
+      <h3>if / else</h3>
+      <p>
+        <code>if</code> is an expression — it produces a value that can be bound.
+      </p>
+      <pre><code><span class="keyword">let</span> max = <span class="keyword">if</span> a > b { a } <span class="keyword">else</span> { b };
+
+<span class="keyword">if</span> x < <span class="number">0</span> {
+    <span class="function">println_str</span>(<span class="string">"negative"</span>);
+} <span class="keyword">else</span> <span class="keyword">if</span> x == <span class="number">0</span> {
+    <span class="function">println_str</span>(<span class="string">"zero"</span>);
+} <span class="keyword">else</span> {
+    <span class="function">println_str</span>(<span class="string">"positive"</span>);
+}</code></pre>
+
+      <h3>While Loops</h3>
+      <pre><code><span class="keyword">let</span> <span class="keyword">mut</span> i = <span class="number">0</span>;
+<span class="keyword">while</span> i < <span class="number">10</span> {
+    <span class="function">println_i64</span>(i);
+    i += <span class="number">1</span>;
+}</code></pre>
+
+      <h3>For Loops</h3>
+      <p>
+        The <code>for</code> loop iterates over ranges and collections.
+      </p>
+      <pre><code><span class="comment">// Range iteration</span>
+<span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">0</span>..<span class="number">10</span> {
+    <span class="function">println_i64</span>(i);
+}
+
+<span class="comment">// Collection iteration (Vec, array, etc.)</span>
+<span class="keyword">let</span> v = <span class="type">Vec</span>::<span class="function">new</span>();
+v.<span class="function">push</span>(<span class="number">1</span>); v.<span class="function">push</span>(<span class="number">2</span>); v.<span class="function">push</span>(<span class="number">3</span>);
+<span class="keyword">for</span> item <span class="keyword">in</span> v {
+    <span class="function">println_i64</span>(item);
+}</code></pre>
+
+      <!-- ─── Match ─── -->
+      <h2 id="match">Match</h2>
+      <p>
+        <code>match</code> is a powerful pattern-matching expression. It must be exhaustive — all possible cases must be handled.
+      </p>
+      <pre><code><span class="keyword">fn</span> <span class="function">describe</span>(val: <span class="type">i64</span>) -> <span class="type">str</span> {
+    <span class="keyword">return</span> <span class="keyword">match</span> val {
+        <span class="number">0</span> => <span class="string">"zero"</span>,
+        <span class="number">1</span> => <span class="string">"one"</span>,
+        _ => <span class="string">"other"</span>,  <span class="comment">// wildcard catch-all</span>
+    };
+}
+
+<span class="comment">// Destructuring enums</span>
+<span class="keyword">match</span> opt {
+    <span class="type">Option</span>::<span class="function">Some</span>(n) => <span class="function">process</span>(n),
+    <span class="type">Option</span>::<span class="function">None</span> => <span class="number">0</span>,
+}</code></pre>
+
+      <!-- ─── Structs ─── -->
+      <h2 id="structs">Structs</h2>
+
+      <h3>Definition</h3>
+      <pre><code><span class="keyword">struct</span> <span class="type">Point</span> {
+    x: <span class="type">i64</span>,
+    y: <span class="type">i64</span>,
+}</code></pre>
+
+      <h3>Construction</h3>
+      <pre><code><span class="keyword">let</span> p = <span class="type">Point</span> { x: <span class="number">3</span>, y: <span class="number">4</span> };
+
+<span class="comment">// Shorthand field init (variable name matches field name)</span>
+<span class="keyword">let</span> x = <span class="number">10</span>;
+<span class="keyword">let</span> y = <span class="number">20</span>;
+<span class="keyword">let</span> q = <span class="type">Point</span> { x, y };</code></pre>
+
+      <h3>Field Access</h3>
+      <pre><code><span class="keyword">let</span> px = p.x;
+<span class="keyword">let</span> py = p.y;</code></pre>
+
+      <h3>Methods via impl</h3>
+      <pre><code><span class="keyword">impl</span> <span class="type">Point</span> {
+    <span class="keyword">fn</span> <span class="function">origin</span>() -> <span class="type">Point</span> {
+        <span class="keyword">return</span> <span class="type">Point</span> { x: <span class="number">0</span>, y: <span class="number">0</span> };
+    }
+
+    <span class="keyword">fn</span> <span class="function">magnitude</span>(<span class="keyword">self</span>) -> <span class="type">f64</span> {
+        <span class="keyword">return</span> <span class="function">sqrt</span>((<span class="keyword">self</span>.x * <span class="keyword">self</span>.x + <span class="keyword">self</span>.y * <span class="keyword">self</span>.y) <span class="keyword">as</span> <span class="type">f64</span>);
+    }
+}
+
+<span class="keyword">let</span> p = <span class="type">Point</span>::<span class="function">origin</span>();
+<span class="keyword">let</span> m = p.<span class="function">magnitude</span>();  <span class="comment">// 0.0</span></code></pre>
+
+      <!-- ─── Enums ─── -->
+      <h2 id="enums">Enums</h2>
+
+      <h3>Definition</h3>
+      <pre><code><span class="keyword">enum</span> <span class="type">Option</span>&lt;T&gt; {
+    <span class="function">Some</span>(T),
+    <span class="function">None</span>,
+}
+
+<span class="keyword">enum</span> <span class="type">Color</span> {
+    <span class="function">Red</span>,
+    <span class="function">Green</span>,
+    <span class="function">Blue</span>,
+}</code></pre>
+
+      <h3>Usage</h3>
+      <pre><code><span class="keyword">let</span> present = <span class="type">Option</span>::<span class="function">Some</span>(<span class="number">42</span>);
+<span class="keyword">let</span> absent = <span class="type">Option</span>::<span class="function">None</span>;
+
+<span class="keyword">let</span> c = <span class="type">Color</span>::<span class="function">Red</span>;</code></pre>
+
+      <h3>Pattern Matching on Enums</h3>
+      <pre><code><span class="keyword">fn</span> <span class="function">unwrap_or</span>&lt;T&gt;(opt: <span class="type">Option</span>&lt;T&gt;, default: T) -> T {
+    <span class="keyword">return</span> <span class="keyword">match</span> opt {
+        <span class="type">Option</span>::<span class="function">Some</span>(val) => val,
+        <span class="type">Option</span>::<span class="function">None</span> => default,
+    };
+}</code></pre>
+
+      <!-- ─── Tuples ─── -->
+      <h2 id="tuples">Tuples</h2>
+      <p>
+        Tuples group multiple values of possibly different types. They are indexed by position with dot notation.
+      </p>
+      <pre><code><span class="keyword">let</span> pair = (<span class="number">42</span>, <span class="string">"hello"</span>);
+<span class="keyword">let</span> num = pair.<span class="number">0</span>;  <span class="comment">// 42</span>
+<span class="keyword">let</span> msg = pair.<span class="number">1</span>;  <span class="comment">// "hello"</span>
+
+<span class="comment">// Tuple types: (i64, str)</span>
+<span class="keyword">fn</span> <span class="function">split</span>() -> (<span class="type">i64</span>, <span class="type">str</span>) {
+    <span class="keyword">return</span> (<span class="number">1</span>, <span class="string">"one"</span>);
+}</code></pre>
+
+      <!-- ─── Arrays ─── -->
+      <h2 id="arrays">Arrays &amp; Slices</h2>
+
+      <h3>Fixed-Size Arrays</h3>
+      <p>
+        Arrays have a fixed length determined at compile time. They live on the stack by default.
+      </p>
+      <pre><code><span class="keyword">let</span> arr: [<span class="type">i64</span>; <span class="number">5</span>] = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];
+<span class="keyword">let</span> first = arr[<span class="number">0</span>];  <span class="comment">// index access</span>
+
+<span class="comment">// Arrays can be iterated</span>
+<span class="keyword">for</span> val <span class="keyword">in</span> arr {
+    <span class="function">println_i64</span>(val);
+}</code></pre>
+
+      <h3>Vector (Dynamic Array)</h3>
+      <p>
+        <code>Vec</code> provides a dynamically-sized, heap-allocated array. It is part of the standard library (<code>std::vec</code>).
+      </p>
+      <pre><code><span class="keyword">let</span> v = <span class="type">Vec</span>::<span class="function">new</span>();
+v.<span class="function">push</span>(<span class="number">10</span>);
+v.<span class="function">push</span>(<span class="number">20</span>);
+v.<span class="function">push</span>(<span class="number">30</span>);
+
+<span class="keyword">let</span> first = v[<span class="number">0</span>];   <span class="comment">// 10</span>
+<span class="keyword">let</span> len = v.<span class="function">len</span>();    <span class="comment">// 3</span></code></pre>
+
+      <!-- ─── Generics ─── -->
+      <h2 id="generics">Generics</h2>
+      <p>
+        Zeta supports parametric polymorphism with type parameters in angle brackets. Generics are monomorphized — each concrete instantiation generates specialized code.
+      </p>
+
+      <pre><code><span class="keyword">fn</span> <span class="function">identity</span>&lt;T&gt;(x: T) -> T {
+    <span class="keyword">return</span> x;
+}
+
+<span class="keyword">let</span> a = <span class="function">identity</span>(<span class="number">42</span>);     <span class="comment">// T inferred as i64</span>
+<span class="keyword">let</span> b = <span class="function">identity</span>(<span class="string">"hi"</span>);  <span class="comment">// T inferred as str</span></code></pre>
+
+      <h3>Generic Structs</h3>
+      <pre><code><span class="keyword">struct</span> <span class="type">Pair</span>&lt;A, B&gt; {
+    first: A,
+    second: B,
+}
+
+<span class="keyword">let</span> p = <span class="type">Pair</span> { first: <span class="number">1</span>, second: <span class="string">"two"</span> };</code></pre>
+
+      <!-- ─── Concepts ─── -->
+      <h2 id="concepts">Concepts</h2>
+      <p>
+        Concepts constrain type parameters, similar to Rust's traits or Haskell's type classes. They describe what operations a type must support.
+      </p>
+
+      <pre><code><span class="keyword">fn</span> <span class="function">max</span>&lt;T: <span class="type">Ord</span>&gt;(a: T, b: T) -> T {
+    <span class="keyword">if</span> a >= b { <span class="keyword">return</span> a; }
+    <span class="keyword">return</span> b;
+}</code></pre>
+
+      <h3>Concept Refinement Hierarchy</h3>
+      <p>
+        Inspired by Stepanov's <em>Elements of Programming</em>, concepts form a refinement lattice:
+      </p>
+      <pre><code>Regular → TotallyOrdered → Semigroup → Monoid → Group → Ring</code></pre>
+      <p>
+        A type satisfying a higher-level concept automatically satisfies all its parents. This enables writing generic algorithms that are provably correct at the type level.
+      </p>
+
+      <div class="tip">
+        <strong>Tip:</strong> If your generic function requires ordering, constrain with <code>Ord</code>. If it requires addition with identity, use <code>Monoid</code>. The compiler checks concept satisfaction at compile time.
       </div>
-    </section>
-    <section class="section">
-      <div class="container">
-        <h1 class="section-title">Compiling to WebAssembly</h1>
-        <p style="text-align:center; max-width:800px; margin:0 auto 2rem; font-size:1.2rem;">
-          Zeta has native WebAssembly support. Compile your programs to <code>wasm32-unknown-unknown</code> for direct browser execution with zero dependencies.
-        </p>
-        <div class="example-code">
-          <pre><code>zeta hello.z --target wasm32-unknown-unknown -o hello.wasm</code></pre>
-        </div>
-        <p style="text-align:center; max-width:800px; margin:2rem auto;">
-          The resulting <code>.wasm</code> module is tiny (~4-7 kB for simple programs) and instantly deployable.<br>
-          Experiment with the WASM target directly in the <a href="play.html" style="color:var(--accent);">Playground</a>.
-        </p>
+
+      <!-- ─── Memory ─── -->
+      <h2 id="memory">Memory Model</h2>
+
+      <h3>Stack Priority</h3>
+      <p>
+        Zeta allocates on the stack by default. Fixed-size arrays, structs, and tuples live on the stack unless explicitly moved to the heap.
+      </p>
+
+      <h3>Heap Allocation</h3>
+      <p>
+        Use <code>Vec</code>, <code>String</code>, or other standard library types for heap allocation:
+      </p>
+      <pre><code><span class="keyword">let</span> v = <span class="type">Vec</span>::<span class="function">new</span>();  <span class="comment">// heap-allocated buffer</span>
+v.<span class="function">push</span>(<span class="number">1</span>);
+v.<span class="function">push</span>(<span class="number">2</span>);</code></pre>
+
+      <h3>Ownership</h3>
+      <p>
+        Zeta uses a straightforward ownership model: <strong>one writer or many readers</strong> at any point. This is tracked at compile time without explicit lifetimes or a traditional borrow checker.
+      </p>
+      <pre><code><span class="keyword">let</span> data = <span class="type">Vec</span>::<span class="function">new</span>();
+data.<span class="function">push</span>(<span class="number">1</span>);
+
+<span class="keyword">let</span> len = data.<span class="function">len</span>();      <span class="comment">// immutable read — multiple allowed</span>
+<span class="keyword">let</span> first = data[<span class="number">0</span>];    <span class="comment">// immutable read</span>
+
+data.<span class="function">push</span>(<span class="number">2</span>);              <span class="comment">// mutable write — exclusive access</span></code></pre>
+
+      <!-- ─── Correctness ─── -->
+      <h2 id="correctness">Correctness</h2>
+
+      <h3>Preconditions</h3>
+      <p>
+        <code>pre</code> asserts a condition at function entry. If the condition fails at runtime, the program halts with a descriptive message.
+      </p>
+      <pre><code><span class="keyword">fn</span> <span class="function">divide</span>(a: <span class="type">i64</span>, b: <span class="type">i64</span>) -> <span class="type">i64</span> {
+    <span class="function">pre</span>(b != <span class="number">0</span>, <span class="string">"division by zero"</span>);
+    <span class="keyword">return</span> a / b;
+}</code></pre>
+
+      <h3>Postconditions</h3>
+      <p>
+        <code>post</code> asserts a condition on the return value before the function exits.
+      </p>
+      <pre><code><span class="keyword">fn</span> <span class="function">sqrt_safe</span>(x: <span class="type">f64</span>) -> <span class="type">f64</span> {
+    <span class="function">pre</span>(x >= <span class="number">0.0</span>, <span class="string">"sqrt of negative number"</span>);
+    <span class="keyword">let</span> result = <span class="function">sqrt</span>(x);
+    <span class="function">post</span>(result >= <span class="number">0.0</span>, <span class="string">"result must be non-negative"</span>);
+    <span class="keyword">return</span> result;
+}</code></pre>
+
+      <h3>Loop Invariants</h3>
+      <p>
+        <code>invariant</code> asserts a property that must hold at each iteration of a loop.
+      </p>
+      <pre><code><span class="keyword">let</span> <span class="keyword">mut</span> sum = <span class="number">0</span>;
+<span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">0</span>..n {
+    <span class="function">invariant</span>(sum == i * (i - <span class="number">1</span>) / <span class="number">2</span>);
+    sum += i;
+}</code></pre>
+
+      <!-- ─── Attributes ─── -->
+      <h2 id="attributes">Attributes</h2>
+      <p>
+        Attributes decorate types and functions with metadata. They use <code>#[...]</code> syntax.
+      </p>
+      <pre><code><span class="comment">// Mathematical property annotations</span>
+<span class="builtin">#[commutative]</span>
+<span class="keyword">fn</span> <span class="function">add</span>(a: <span class="type">i64</span>, b: <span class="type">i64</span>) -> <span class="type">i64</span> { a + b }
+
+<span class="builtin">#[associative]</span>
+<span class="keyword">fn</span> <span class="function">multiply</span>(a: <span class="type">i64</span>, b: <span class="type">i64</span>) -> <span class="type">i64</span> { a * b }
+
+<span class="builtin">#[identity]</span>
+<span class="keyword">fn</span> <span class="function">zero</span>() -> <span class="type">i64</span> { <span class="number">0</span> }</code></pre>
+      <p>
+        These annotations enable algebraic optimizations during CTFE — the compiler can reorder, fuse, or eliminate operations based on declared properties.
+      </p>
+
+      <!-- ─── Standard Library ─── -->
+      <h2 id="stdlib-overview">Standard Library</h2>
+      <p>
+        Zeta v1.0.0 ships with 20+ standard library modules organized into three tiers. All modules are written in self-hosted Zeta.
+      </p>
+
+      <h3 id="stdlib-mem">std::mem</h3>
+      <p>
+        Memory introspection and manipulation primitives.
+      </p>
+      <table>
+        <thead>
+          <tr><th>Function</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>size_of&lt;T&gt;()</code></td><td>Returns the size of type T in bytes</td></tr>
+          <tr><td><code>align_of&lt;T&gt;()</code></td><td>Returns the alignment of type T</td></tr>
+          <tr><td><code>swap(a, b)</code></td><td>Swaps two values</td></tr>
+          <tr><td><code>replace(dest, src)</code></td><td>Replaces dest with src, returns old value</td></tr>
+        </tbody>
+      </table>
+      <pre><code><span class="keyword">let</span> s = <span class="type">size_of</span>&lt;<span class="type">i64</span>&gt;();  <span class="comment">// 8</span>
+<span class="keyword">let</span> a = <span class="type">align_of</span>&lt;<span class="type">i64</span>&gt;(); <span class="comment">// 8</span></code></pre>
+
+      <h3 id="stdlib-vec">std::vec</h3>
+      <p>
+        Dynamic, heap-allocated vector with amortized O(1) push.
+      </p>
+      <table>
+        <thead>
+          <tr><th>Method</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>Vec::new()</code></td><td>Create a new empty vector</td></tr>
+          <tr><td><code>push(val)</code></td><td>Append an element</td></tr>
+          <tr><td><code>len()</code></td><td>Number of elements</td></tr>
+          <tr><td><code>v[i]</code></td><td>Index access (zero-based)</td></tr>
+          <tr><td><code>pop()</code></td><td>Remove and return the last element</td></tr>
+        </tbody>
+      </table>
+      <pre><code><span class="keyword">let</span> v = <span class="type">Vec</span>::<span class="function">new</span>();
+v.<span class="function">push</span>(<span class="number">10</span>);
+v.<span class="function">push</span>(<span class="number">20</span>);
+<span class="keyword">let</span> sum = v[<span class="number">0</span>] + v[<span class="number">1</span>];  <span class="comment">// 30</span></code></pre>
+
+      <h3 id="stdlib-string">std::string</h3>
+      <p>
+        UTF-8 encoded string type with methods for inspection and conversion.
+      </p>
+      <table>
+        <thead>
+          <tr><th>Method</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>len()</code></td><td>Returns the number of bytes (not characters)</td></tr>
+          <tr><td><code>contains(substr)</code></td><td>Checks if the string contains a substring</td></tr>
+          <tr><td><code>starts_with(prefix)</code></td><td>Checks the prefix</td></tr>
+          <tr><td><code>ends_with(suffix)</code></td><td>Checks the suffix</td></tr>
+        </tbody>
+      </table>
+
+      <h3 id="stdlib-fs">std::fs</h3>
+      <p>
+        Filesystem operations backed by the host OS.
+      </p>
+      <div class="method-list">
+        <div class="method-item"><code>fs_read_to_string</code></div>
+        <div class="method-item"><code>fs_write</code></div>
+        <div class="method-item"><code>fs_create_dir</code></div>
+        <div class="method-item"><code>fs_create_dir_all</code></div>
+        <div class="method-item"><code>fs_remove_file</code></div>
+        <div class="method-item"><code>fs_remove_dir</code></div>
+        <div class="method-item"><code>fs_rename</code></div>
+        <div class="method-item"><code>fs_copy</code></div>
       </div>
-    </section>
-    <section class="section" id="features">
-      <div class="container">
-        <h1 class="section-title">Key Features</h1>
-        <div class="features-grid">
-          <div class="feature-card">
-            <h3>Algebraic semiring CTFE + fusion</h3>
-          </div>
-          <div class="feature-card">
-            <h3>CacheSafe → strict TBAA → maximum LLVM vectorization</h3>
-          </div>
-          <div class="feature-card">
-            <h3>Thin monomorphization + global specialization cache</h3>
-          </div>
-          <div class="feature-card">
-            <h3>M:N green-thread actors (full runtime &lt; 200 LOC)</h3>
-          </div>
-          <div class="feature-card">
-            <h3>Built-in std::http_get, std::tls_get, std::datetime_now</h3>
-          </div>
-          <div class="feature-card">
-            <h3>Live AI-driven optimization (#[ai_opt])</h3>
-          </div>
-          <div class="feature-card">
-            <h3>Affine borrow checking with speculative states</h3>
-          </div>
-          <div class="feature-card">
-            <h3>No borrow checker, macros, Cargo, or lockfiles</h3>
-          </div>
-          <div class="feature-card">
-            <h3>Dictionary literals, single-line functions, ? error propagation</h3>
-          </div>
-        </div>
+
+      <h3 id="stdlib-net">std::net</h3>
+      <p>
+        Networking primitives for TCP and UDP communication.
+      </p>
+      <div class="method-list">
+        <div class="method-item"><code>TcpListener::bind</code></div>
+        <div class="method-item"><code>TcpStream::connect</code></div>
+        <div class="method-item"><code>read / write</code></div>
+        <div class="method-item"><code>UdpSocket::bind</code></div>
       </div>
-    </section>
-    <section class="section">
-      <div class="container">
-        <h1 class="section-title">Installation</h1>
-        <p style="text-align:center; max-width:800px; margin:0 auto;">
-          See the <a href="downloads.html" style="color:var(--accent);">Downloads page</a> for one-line installer, Cargo installation, or pre-built binaries.
-        </p>
+
+      <h3 id="stdlib-sync">std::sync</h3>
+      <p>
+        Synchronization primitives for concurrent programming.
+      </p>
+      <div class="method-list">
+        <div class="method-item"><code>atomic_load</code></div>
+        <div class="method-item"><code>atomic_store</code></div>
+        <div class="method-item"><code>atomic_compare_exchange</code></div>
+        <div class="method-item"><code>Mutex</code></div>
       </div>
-    </section>
-    <section class="section">
-      <div class="container">
-        <h1 class="section-title">Language Reference</h1>
-        <p style="text-align:center; max-width:800px; margin:0 auto; font-size:1.2rem;">
-          A comprehensive language reference is under active development following the self-hosting milestone.<br>
-          Start with the <a href="tour.html" style="color:var(--accent);">Language Tour</a> for an introduction to Zeta syntax and concepts.
-        </p>
+
+      <h3 id="stdlib-time">std::time</h3>
+      <p>
+        Time measurement and duration types.
+      </p>
+      <div class="method-list">
+        <div class="method-item"><code>Duration::from_secs</code></div>
+        <div class="method-item"><code>Duration::from_millis</code></div>
+        <div class="method-item"><code>SystemTime::now</code></div>
       </div>
-    </section>
-  </main>
+
+      <h3 id="stdlib-iter">std::iter</h3>
+      <p>
+        Iterator traits and adapter combinators.
+      </p>
+      <div class="method-list">
+        <div class="method-item"><code>Iterator::map</code></div>
+        <div class="method-item"><code>Iterator::filter</code></div>
+        <div class="method-item"><code>Iterator::fold</code></div>
+        <div class="method-item"><code>Iterator::sum</code></div>
+        <div class="method-item"><code>Iterator::collect</code></div>
+      </div>
+
+      <!-- ─── CTFE ─── -->
+      <h2 id="comptime">Compile-Time Evaluation (CTFE)</h2>
+      <p>
+        <code>comptime</code> blocks execute arbitrary Zeta code during compilation. The result is baked into the binary — zero runtime cost.
+      </p>
+      <pre><code><span class="keyword">const</span> FACTORIAL_10: <span class="type">i64</span> = <span class="keyword">comptime</span> {
+    <span class="keyword">fn</span> <span class="function">fact</span>(n: <span class="type">i64</span>) -> <span class="type">i64</span> {
+        <span class="keyword">if</span> n <= <span class="number">1</span> { <span class="keyword">return</span> <span class="number">1</span>; }
+        <span class="keyword">return</span> n * <span class="function">fact</span>(n - <span class="number">1</span>);
+    }
+    <span class="function">fact</span>(<span class="number">10</span>)
+};
+<span class="comment">// FACTORIAL_10 = 3628800 — computed at compile time</span></code></pre>
+      <p>
+        CTFE supports the full Zeta language: functions, loops, conditionals, variables, and more. The compiler evaluates <code>comptime</code> blocks using the same MIR interpreter used for constant folding and algebraic fusion.
+      </p>
+
+      <div class="tip">
+        <strong>Tip:</strong> Use <code>comptime</code> for lookup tables, precomputed constants, code generation, and any computation that can be moved from runtime to compile time.
+      </div>
+
+      <!-- ─── WASM ─── -->
+      <h2 id="wasm">WebAssembly</h2>
+      <p>
+        Zeta compiles natively to WebAssembly. Pass <code>--target wasm32</code> to the compiler and get a <code>.wasm</code> module that runs in any Wasm runtime or browser.
+      </p>
+      <pre><code><span class="keyword">fn</span> <span class="function">main</span>() -> <span class="type">i64</span> {
+    <span class="function">println_str</span>(<span class="string">"Hello from the browser!"</span>);
+    <span class="keyword">return</span> <span class="number">0</span>;
+}
+
+<span class="comment">// Compile:</span>
+<span class="comment">//   ./bin/zetac --target wasm32 hello.z -o hello.wasm</span>
+<span class="comment">// Run:</span>
+<span class="comment">//   wasmtime hello.wasm</span></code></pre>
+      <p>
+        WASM modules are compiled through the same LLVM pipeline. Output is typically <strong>~4 kB</strong> with zero runtime overhead.
+      </p>
+
+      <!-- ─── SIMD ─── -->
+      <h2 id="simd">SIMD &amp; Auto-Vectorization</h2>
+      <p>
+        Zeta's type system enables aggressive SIMD optimization. The CacheSafe alias analysis guarantees that LLVM can auto-vectorize loops without manual hints or <code>unsafe</code> blocks.
+      </p>
+      <pre><code><span class="keyword">fn</span> <span class="function">vector_add</span>(a: [<span class="type">f64</span>; <span class="number">4</span>], b: [<span class="type">f64</span>; <span class="number">4</span>]) -> [<span class="type">f64</span>; <span class="number">4</span>] {
+    <span class="keyword">return</span> a + b;  <span class="comment">// compiles to SIMD instructions</span>
+}
+
+<span class="keyword">fn</span> <span class="function">sum_array</span>(arr: [<span class="type">f64</span>; <span class="number">1024</span>]) -> <span class="type">f64</span> {
+    <span class="keyword">let</span> <span class="keyword">mut</span> sum: <span class="type">f64</span> = <span class="number">0.0</span>;
+    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">0</span>..<span class="number">1024</span> {
+        sum += arr[i];
+    }
+    <span class="keyword">return</span> sum;
+    <span class="comment">// auto-vectorized to SIMD reduction</span>
+}</code></pre>
+
+      <!-- ─── Actors ─── -->
+      <h2 id="actors">Actors &amp; Concurrency</h2>
+      <p>
+        Zeta provides a lightweight actor model with M:N threading. Actors communicate via typed channels. The work-stealing scheduler distributes actors across available OS threads.
+      </p>
+      <pre><code><span class="keyword">fn</span> <span class="function">main</span>() -> <span class="type">i64</span> {
+    <span class="keyword">let</span> (tx, rx) = <span class="function">channel</span>&lt;<span class="type">str</span>&gt;();
+
+    <span class="function">spawn</span>(<span class="keyword">fn</span>() {
+        tx.<span class="function">send</span>(<span class="string">"ping"</span>);
+    });
+
+    <span class="keyword">let</span> msg = rx.<span class="function">recv</span>();
+    <span class="function">println_str</span>(msg);  <span class="comment">// "ping"</span>
+
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</code></pre>
+      <div class="note">
+        <strong>Performance:</strong> 100,000 actors exchanging ping-pong messages completes in 0.94 ms — 50% faster than Rust's standard channels.
+      </div>
+
+      <!-- ─── FFI ─── -->
+      <h2 id="ffi">Foreign Function Interface</h2>
+      <p>
+        Zeta can call C functions through <code>extern "C"</code> blocks, declared via <code>std::ffi</code>.
+      </p>
+      <pre><code><span class="comment">// Call a C function from Zeta</span>
+<span class="keyword">extern</span> <span class="string">"C"</span> <span class="keyword">fn</span> <span class="function">puts</span>(s: *<span class="type">str</span>) -> <span class="type">i64</span>;
+
+<span class="keyword">fn</span> <span class="function">main</span>() -> <span class="type">i64</span> {
+    <span class="function">puts</span>(<span class="string">"Hello from Zeta FFI!"</span>);
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</code></pre>
+
+      <!-- ─── Sieve ─── -->
+      <h2 id="sieve">Murphy's Sieve</h2>
+      <p>
+        Competition-ready prime counting using a 30030-wheel (2×3×5×7×11×13) for 80.8% reduction in checks. Baked into Zeta's standard library and test suite.
+      </p>
+      <pre><code><span class="keyword">fn</span> <span class="function">murphy_sieve</span>(limit: <span class="type">i64</span>) -> <span class="type">i64</span> {
+    <span class="keyword">if</span> limit < <span class="number">2</span> { <span class="keyword">return</span> <span class="number">0</span>; }
+
+    <span class="keyword">const</span> WHEEL: <span class="type">i64</span> = <span class="number">30030</span>;  <span class="comment">// product of first 6 primes</span>
+
+    <span class="keyword">let</span> <span class="keyword">mut</span> count: <span class="type">i64</span> = <span class="number">1</span>;  <span class="comment">// 2 counts as prime</span>
+    <span class="keyword">let</span> <span class="keyword">mut</span> i: <span class="type">i64</span> = <span class="number">3</span>;
+
+    <span class="keyword">while</span> i <= limit {
+        <span class="keyword">if</span> <span class="function">is_coprime_to_wheel</span>(i) {
+            <span class="keyword">if</span> <span class="function">is_prime</span>(i) { count += <span class="number">1</span>; }
+        }
+        i += <span class="number">2</span>;
+    }
+    <span class="keyword">return</span> count;
+}</code></pre>
+      <p>
+        See <code>docs/02_MURPHYS_SIEVE_IMPLEMENTATION_GUIDE.md</code> in the repository for the full treatment.
+      </p>
+
+      <!-- ─── Pipeline ─── -->
+      <h2 id="pipeline">Compiler Pipeline</h2>
+      <p>
+        The Zeta compiler transforms source code through multiple intermediate representations:
+      </p>
+      <pre><code>Zeta Source (.z)
+    │
+    ▼ <strong>Lexer → Parser</strong>
+    │  Tokenizes source and builds the AST
+    │
+    ▼ <strong>HIR</strong> (High-level IR)
+    │  Resolves imports, identities, and macros
+    │
+    ▼ <strong>Resolver</strong>
+    │  Type resolution, generics, specialization, concept checking
+    │
+    ▼ <strong>THIR</strong> (Typed HIR)
+    │  Fully resolved types and identities
+    │
+    ▼ <strong>MIR</strong> (Mid-level IR)
+    │  Control flow graph with basic blocks — optimizations applied here
+    │
+    ▼ <strong>LLVM Codegen</strong>
+    │  Lowers MIR to LLVM IR, runs LLVM optimization passes
+    │
+    ▼ Machine Code
+    │  Native executable or WebAssembly module</code></pre>
+      <p>
+        The compiler is itself written in Zeta. Every stage of this pipeline is compiled by Zeta, proving the bootstrap loop is closed.
+      </p>
+
+      <!-- ─── Errors ─── -->
+      <h2 id="errors">Error Codes</h2>
+      <p>
+        Zeta has 175+ distinct error codes, each with a unique identifier (E1001–E9015). Every error tells you what went wrong, where, and how to fix it.
+      </p>
+      <table>
+        <thead>
+          <tr><th>Range</th><th>Category</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>E1001–E1999</td><td>Lexical / parsing errors</td></tr>
+          <tr><td>E2001–E2999</td><td>Type mismatches and inference failures</td></tr>
+          <tr><td>E3001–E3999</td><td>Resolution and name binding errors</td></tr>
+          <tr><td>E4001–E4999</td><td>Concept satisfaction failures</td></tr>
+          <tr><td>E5001–E5999</td><td>MIR lowering errors</td></tr>
+          <tr><td>E6001–E6999</td><td>Codegen errors</td></tr>
+          <tr><td>E7001–E7999</td><td>CTFE / comptime evaluation errors</td></tr>
+          <tr><td>E8001–E8999</td><td>Standard library errors</td></tr>
+          <tr><td>E9001–E9015</td><td>Internal compiler errors</td></tr>
+        </tbody>
+      </table>
+      <pre><code><span class="comment">// Example error output:</span>
+error[E2001]: type mismatch: expected i64, found str
+  ┌─ main.z:3:17
+  │
+3 │     let x: i64 = "hello";
+  │                  ^^^^^^^
+  │                  expected i64, found str
+  │                  use explicit conversion or change the type annotation</code></pre>
+
+      <p style="margin-top:3rem; text-align:center; color:var(--muted);">
+        <em>This documentation covers Zeta v1.0.0 — the foundational release.</em><br>
+        <a href="play.html" style="color:var(--accent);">Try Zeta in the Playground</a> &middot;
+        <a href="tour.html" style="color:var(--accent);">Take the Tour</a>
+      </p>
+    </main>
+  </div>
   <footer>
     <div class="container footer-grid">
       <div class="footer-column">
