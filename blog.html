@@ -47,7 +47,171 @@
     </section>
     <section class="section">
       <div class="container">
-        <article style="max-width:900px; margin:0 auto;">
+        <article style="max-width:900px; margin:0 auto; margin-bottom:6rem; padding-bottom:4rem; border-bottom:1px solid var(--border-color, #333);">
+          <h1 class="section-title" style="font-size:2.8rem; text-align:left;">Zeta v1.0.0: The Foundational Release — Pure Zeta, Self-Hosting, Ready</h1>
+          <p style="color:var(--muted); margin-bottom:2rem;">May 3, 2026 — Roy Murphy</p>
+
+          <p style="font-size:1.3rem; margin-bottom:2rem;">
+            <strong>v1.0.0 is here.</strong> This isn't just another version bump. This is the first release of Zeta where every line of the compiler — every lexer rule, every MIR pass, every LLVM codegen path — is written in <strong>Zeta itself</strong>. The Rust bootstrap is gone. The scaffolding is gone. What remains is pure, self-hosted Zeta — a language that compiles itself, runs everything, and asks nothing of you but your code. 
+          </p>
+
+          <p style="font-size:1.2rem; margin-bottom:2rem;">
+            If you've been watching Zeta from the sidelines, <strong>now is the moment to get your hands dirty.</strong> v1.0.0 is a foundational release — not a beta, not a prototype, but a production-ready compiler with a full standard library, WebAssembly support, compile-time evaluation, SIMD, an actor runtime, and the same performance that's been winning benchmarks since day one. It ships as a single static binary with zero dependencies. Download it, run it, and feel what a language built from first principles actually does.
+          </p>
+
+          <h2 style="color:var(--accent); margin:3rem 0 1rem; font-size:2rem;">What Changed: The Rust Bootstrap is Dead</h2>
+          <p style="font-size:1.2rem; margin-bottom:2rem;">
+            Every previous version of Zeta relied on a Rust bootstrapper to get off the ground. The parser was Rust. The type checker was Rust. The codegen was Rust. v0.3.0 proved Zeta could compile itself, but the Rust skeleton was still in the closet. Not anymore.
+          </p>
+          <p style="font-size:1.2rem; margin-bottom:2rem;">
+            v1.0.0 removes every Rust source file. The <code>src/</code> directory now holds <strong>51+ pure Zeta source files</strong> — the frontend, the middle-end, the backend, the runtime, the standard library, the test suite. The compiler binary in <code>bin/zetac</code> was compiled by Zeta from Zeta code. If you clone the repo and run <code>./bin/zetac src/main.z -o zetac</code>, you get the same compiler back. That's the full bootstrap loop, closed forever.
+          </p>
+
+          <h2 style="color:var(--accent); margin:3rem 0 1rem; font-size:2rem;">The Language: Designed, Not Accumulated</h2>
+          <p style="font-size:1.2rem; margin-bottom:2rem;">
+            Zeta didn't evolve by bolting features onto a C heritage. It was designed from Alexander Stepanov's algebraic foundations — every abstraction is mathematically grounded, every optimization is provable, and nothing exists that doesn't earn its keep.
+          </p>
+
+          <h3 style="color:var(--accent); margin:2rem 0 0.5rem; font-size:1.5rem;">Strong Static Typing with Inference</h3>
+          <pre style="background:var(--code-bg,#1a1a2e); padding:1.5rem; border-radius:8px; overflow-x:auto; margin:1rem 0;"><code>fn add(x: i64, y: i64) -> i64 {
+    return x + y;
+}
+
+fn infer() {
+    let x = 42;       // inferred i64
+    let y = 3.14;     // inferred f64
+    let b = true;     // inferred bool
+}</code></pre>
+
+          <h3 style="color:var(--accent); margin:2rem 0 0.5rem; font-size:1.5rem;">Algebraic Data Types</h3>
+          <p style="font-size:1.2rem; margin-bottom:1rem;">
+            Structs, enums, tuples — the full toolkit for modeling data without ceremony.
+          </p>
+          <pre style="background:var(--code-bg,#1a1a2e); padding:1.5rem; border-radius:8px; overflow-x:auto; margin:1rem 0;"><code>struct Point { x: i64, y: i64 }
+
+enum Option&lt;T&gt; {
+    Some(T),
+    None,
+}
+
+fn origin() -> Point {
+    return Point { x: 0, y: 0 };
+}</code></pre>
+
+          <h3 style="color:var(--accent); margin:2rem 0 0.5rem; font-size:1.5rem;">Generics, Concepts &amp; Specialization</h3>
+          <p style="font-size:1.2rem; margin-bottom:1rem;">
+            Parametric polymorphism with concept constraints, monomorphization, and concept-based refinement hierarchies from Stepanov's Elements of Programming.
+          </p>
+          <pre style="background:var(--code-bg,#1a1a2e); padding:1.5rem; border-radius:8px; overflow-x:auto; margin:1rem 0;"><code>fn identity&lt;T&gt;(x: T) -> T { return x; }
+
+fn max&lt;T: Ord&gt;(a: T, b: T) -> T {
+    if a >= b { return a; }
+    return b;
+}</code></pre>
+
+          <h3 style="color:var(--accent); margin:2rem 0 0.5rem; font-size:1.5rem;">First-Class Functions &amp; Closures</h3>
+          <p style="font-size:1.2rem; margin-bottom:1rem;">
+            Functions are values. Closures capture their environment. Higher-order programming is not a library trick — it's baked into the type system.
+          </p>
+          <pre style="background:var(--code-bg,#1a1a2e); padding:1.5rem; border-radius:8px; overflow-x:auto; margin:1rem 0;"><code>fn make_adder(n: i64) -> (i64) -> i64 {
+    return fn(x: i64) -> i64 { x + n };
+}</code></pre>
+
+          <h3 style="color:var(--accent); margin:2rem 0 0.5rem; font-size:1.5rem;">Compile-Time Evaluation (CTFE)</h3>
+          <p style="font-size:1.2rem; margin-bottom:1rem;">
+            Execute arbitrary Zeta code at compile time with <code>comptime</code> blocks. Algebraic semiring fusion enables mathematical optimization during compilation — your runtime gets the result for free.
+          </p>
+          <pre style="background:var(--code-bg,#1a1a2e); padding:1.5rem; border-radius:8px; overflow-x:auto; margin:1rem 0;"><code>const FACTORIAL_10: i64 = comptime {
+    fn fact(n: i64) -> i64 {
+        if n <= 1 { return 1; }
+        return n * fact(n - 1);
+    }
+    fact(10)
+};
+// FACTORIAL_10 = 3628800 — zero runtime cost</code></pre>
+
+          <h2 style="color:var(--accent); margin:3rem 0 1rem; font-size:2rem;">The Standard Library: Three Tiers, 20+ Modules</h2>
+          <p style="font-size:1.2rem; margin-bottom:2rem;">
+            v1.0.0 ships with a comprehensive standard library organized in three tiers:
+          </p>
+          <ul style="font-size:1.2rem; margin:2rem 0 2rem 3rem; line-height:1.8;">
+            <li><strong>Tier 1 — Core:</strong> <code>std::mem</code>, <code>std::ptr</code>, <code>std::cmp</code>, <code>std::hash</code>, <code>std::iter</code>, <code>std::vec</code>, <code>std::string</code>, <code>std::option</code>, <code>std::result</code></li>
+            <li><strong>Tier 2 — Systems:</strong> <code>std::fs</code>, <code>std::path</code>, <code>std::net</code>, <code>std::sync</code>, <code>std::io</code></li>
+            <li><strong>Tier 3 — Advanced:</strong> <code>std::char</code>, <code>std::time::Duration</code>, <code>std::process::Command</code>, <code>std::thread</code>, <code>std::collections</code>, <code>std::ffi</code></li>
+          </ul>
+          <p style="font-size:1.2rem; margin-bottom:2rem;">
+            Every module is written in self-hosted Zeta. Every function is available without <code>extern</code> blocks or FFI glue. If you can write it in C, you can write it in Zeta — and it will compile faster and run leaner.
+          </p>
+
+          <h2 style="color:var(--accent); margin:3rem 0 1rem; font-size:2rem;">WebAssembly: First-Class Target</h2>
+          <p style="font-size:1.2rem; margin-bottom:2rem;">
+            Pass <code>--target wasm32</code> and Zeta compiles straight to WebAssembly through the same LLVM codegen that produces native binaries. No runtime, no polyfills, no JavaScript glue — just a ~4 kB <code>.wasm</code> module that runs in any Wasm runtime.
+          </p>
+          <pre style="background:var(--code-bg,#1a1a2e); padding:1.5rem; border-radius:8px; overflow-x:auto; margin:1rem 0;"><code># Same source, two targets:
+./bin/zetac hello.z -o hello        # native binary
+./bin/zetac --target wasm32 hello.z -o hello   # WebAssembly</code></pre>
+
+          <h2 style="color:var(--accent); margin:3rem 0 1rem; font-size:2rem;">Error Messages That Actually Help</h2>
+          <p style="font-size:1.2rem; margin-bottom:2rem;">
+            Every compiler error has a unique code (E1001–E9015). 175+ distinct codes covering syntax, type mismatches, resolution failures, and codegen issues — each with a human-readable explanation and a suggestion for how to fix it. No more cryptic one-liners in a terminal.
+          </p>
+          <pre style="background:var(--code-bg,#1a1a2e); padding:1.5rem; border-radius:8px; overflow-x:auto; margin:1rem 0;"><code>error[E2001]: type mismatch: expected i64, found str
+  ┌─ src/main.z:12:13
+  │
+7 │     let x: i64 = "hello";
+  │                  ^^^^^^^  expected i64, found str</code></pre>
+
+          <h2 style="color:var(--accent); margin:3rem 0 1rem; font-size:2rem;">Correctness by Default</h2>
+          <p style="font-size:1.2rem; margin-bottom:2rem;">
+            Precondition and postcondition assertions are baked into the language:
+          </p>
+          <pre style="background:var(--code-bg,#1a1a2e); padding:1.5rem; border-radius:8px; overflow-x:auto; margin:1rem 0;"><code>fn divide(a: i64, b: i64) -> i64 {
+    pre(b != 0, "division by zero");
+    return a / b;
+}</code></pre>
+          <p style="font-size:1.2rem; margin-bottom:2rem;">
+            Loop invariants, mathematical property annotations (<code>#[commutative]</code>, <code>#[associative]</code>, <code>#[identity]</code>), and a concept refinement lattice that mirrors Stepanov's algebraic hierarchy — from <code>Regular</code> through <code>Semigroup</code>, <code>Monoid</code>, <code>Group</code>, to <code>Ring</code>. Not a linter. Not a proof assistant bolted on the side. Built in from the ground up.
+          </p>
+
+          <h2 style="color:var(--accent); margin:3rem 0 1rem; font-size:2rem;">Why This Matters</h2>
+          <p style="font-size:1.2rem; margin-bottom:2rem;">
+            Every new systems language promises to be better than C. Most deliver marginal improvements at the cost of complexity — lifetimes, borrow checkers, trait gymnastics, build system baggage. Zeta doesn't play that game.
+          </p>
+          <p style="font-size:1.2rem; margin-bottom:2rem;">
+            v1.0.0 proves that a language can be <strong>minimal, safe, fast, and self-hosting</strong> without sacrificing any of those properties. The compiler compiles itself in milliseconds. The binaries are kilobytes. The feature set is comprehensive but not bloated. The standard library covers everything you need to build real software — networking, filesystems, threading, SIMD, WebAssembly.
+          </p>
+          <p style="font-size:1.2rem; margin-bottom:2rem;">
+            This is not a research project. This is not a toy. This is a production-ready systems programming language that ships today.
+          </p>
+
+          <h2 style="color:var(--accent); margin:3rem 0 1rem; font-size:2rem;">Get Started in 30 Seconds</h2>
+          <pre style="background:var(--code-bg,#1a1a2e); padding:1.5rem; border-radius:8px; overflow-x:auto; margin:1rem 0;"><code>git clone https://github.com/murphsicles/zeta.git
+cd zeta
+./bin/zetac examples/hello.z -o hello
+./hello</code></pre>
+
+          <p style="font-size:1.2rem; margin-bottom:2rem;">
+            No package manager. No dependency hell. No <code>curl | sh</code>. Just a binary and your code.
+          </p>
+
+          <blockquote style="font-size:1.6rem; color:var(--accent); margin:3rem 0; text-align:center; font-style:italic;">
+            "The language that will outlive its bootstrap."
+          </blockquote>
+
+          <p style="font-size:1.2rem; margin-bottom:3rem;">
+            v1.0.0 is the foundation. Everything builds on top from here — the package ecosystem, the MLGO integration, the SIMD autotuner, the distributed runtime. But the foundation is pure Zeta, and it will never need to be laid again.
+          </p>
+          <p style="font-size:1.2rem; margin-bottom:3rem;">
+            Download it. Try it. Break it. Tell us what you think on GitHub. The future of systems programming isn't coming — it's here, it's self-hosted, and it's called Zeta.
+          </p>
+          <p style="margin-top:3rem;">
+            <a href="https://github.com/murphsicles/zeta/releases/tag/v1.0.0" class="btn primary">Download v1.0.0</a>
+            <a href="play.html" class="btn secondary" style="margin-left:1rem;">Try in Playground</a>
+            <a href="https://github.com/murphsicles/zeta" class="btn secondary" style="margin-left:1rem;" target="_blank">GitHub Repository</a>
+          </p>
+        </article>
+
+        <article style="max-width:900px; margin:0 auto; margin-bottom:6rem; padding-bottom:4rem; border-bottom:1px solid var(--border-color, #333);">
           <h1 class="section-title" style="font-size:2.8rem; text-align:left;">Zeta v0.3.0: Self-Hosting Achieved – The Breakthrough That Changes Everything</h1>
           <p style="color:var(--muted); margin-bottom:2rem;">January 20, 2026 — Roy Murphy</p>
           <p style="font-size:1.2rem; margin-bottom:2rem;">
