@@ -69,7 +69,8 @@
       border-left: 2px solid transparent;
     }
     .docs-sidebar a:hover,
-    .docs-sidebar a:focus {
+    .docs-sidebar a:focus,
+    .docs-sidebar a.active {
       color: var(--accent);
       background: rgba(88,166,255,0.05);
       border-left-color: var(--accent);
@@ -1125,6 +1126,46 @@ error[E2001]: type mismatch: expected i64, found str
       <span>Zeta Foundation © 2026</span>
     </div>
   </footer>
+  <script>
+    <span class="comment">// Scroll-spy: highlight sidebar link for the section in view</span>
+    (function() {
+      var sidebar = document.querySelector('.docs-sidebar');
+      var links = sidebar.querySelectorAll('a[href^="#"]');
+      var sections = [];
+      links.forEach(function(link) {
+        var id = link.getAttribute('href').slice(1);
+        var el = document.getElementById(id);
+        if (el) { sections.push({ el: el, link: link }); }
+      });
+
+      function updateActive() {
+        var scrollY = window.scrollY;
+        var headerH = 80; <span class="comment">// approx header height</span>
+        var current = null;
+        <span class="comment">// Find the last section whose top is above the viewport center</span>
+        for (var i = 0; i < sections.length; i++) {
+          var rect = sections[i].el.getBoundingClientRect();
+          if (rect.top <= 200) {
+            current = sections[i].link;
+          }
+        }
+        links.forEach(function(l) { l.classList.remove('active'); });
+        if (current) { current.classList.add('active'); }
+      }
+
+      window.addEventListener('scroll', updateActive, { passive: true });
+      window.addEventListener('resize', updateActive, { passive: true });
+      updateActive();
+
+      <span class="comment">// On click, immediately highlight</span>
+      links.forEach(function(link) {
+        link.addEventListener('click', function() {
+          links.forEach(function(l) { l.classList.remove('active'); });
+          link.classList.add('active');
+        });
+      });
+    })();
+  </script>
   <script src="assets/js/main.js"></script>
   <script type="text/javascript">
 function googleTranslateElementInit() {
