@@ -48,15 +48,15 @@
     <section class="section">
       <div class="container">
         <article style="max-width:900px; margin:0 auto; margin-bottom:6rem; padding-bottom:4rem; border-bottom:1px solid var(--border-color, #333);">
-          <h1 class="section-title" style="font-size:2.8rem; text-align:left;">Zeta v1.0.0: The Foundational Release — Pure Zeta, Self-Hosting, Ready</h1>
+          <h1 class="section-title" style="font-size:2.8rem; text-align:left;">Zeta v1.0.1: The Foundational Release — Pure Zeta, Self-Hosting, Ready</h1>
           <p style="color:var(--muted); margin-bottom:2rem;">May 3, 2026 — Roy Murphy</p>
 
           <p style="font-size:1.3rem; margin-bottom:2rem;">
-            <strong>v1.0.0 is here.</strong> This isn't just another version bump. This is the first release of Zeta where every line of the compiler — every lexer rule, every MIR pass, every LLVM codegen path — is written in <strong>Zeta itself</strong>. The Rust bootstrap is gone. The scaffolding is gone. What remains is pure, self-hosted Zeta — a language that compiles itself, runs everything, and asks nothing of you but your code. 
+            <strong>v1.0.1 is here.</strong> This isn't just another version bump. This is the first release of Zeta where every line of the compiler — every lexer rule, every MIR pass, every LLVM codegen path — is written in <strong>Zeta itself</strong>. The Rust bootstrap is gone. The scaffolding is gone. What remains is pure, self-hosted Zeta — a language that compiles itself, runs everything, and asks nothing of you but your code. 
           </p>
 
           <p style="font-size:1.2rem; margin-bottom:2rem;">
-            If you've been watching Zeta from the sidelines, <strong>now is the moment to get your hands dirty.</strong> v1.0.0 is a foundational release — not a beta, not a prototype, but a production-ready compiler with a full standard library, WebAssembly support, compile-time evaluation, SIMD, an actor runtime, and the same performance that's been winning benchmarks since day one. It ships as a single static binary with zero dependencies. Download it, run it, and feel what a language built from first principles actually does.
+            If you've been watching Zeta from the sidelines, <strong>now is the moment to get your hands dirty.</strong> v1.0.1 is a foundational release — not a beta, not a prototype, but a production-ready compiler with a full standard library, WebAssembly support, compile-time evaluation, SIMD, an actor runtime, and the same performance that's been winning benchmarks since day one. It ships as a single static binary with zero dependencies. Download it, run it, and feel what a language built from first principles actually does.
           </p>
 
           <h2 style="color:var(--accent); margin:3rem 0 1rem; font-size:2rem;">What Changed: The Rust Bootstrap is Dead</h2>
@@ -64,7 +64,7 @@
             Every previous version of Zeta relied on a Rust bootstrapper to get off the ground. The parser was Rust. The type checker was Rust. The codegen was Rust. v0.3.0 proved Zeta could compile itself, but the Rust skeleton was still in the closet. Not anymore.
           </p>
           <p style="font-size:1.2rem; margin-bottom:2rem;">
-            v1.0.0 removes every Rust source file. The <code>src/</code> directory now holds <strong>51+ pure Zeta source files</strong> — the frontend, the middle-end, the backend, the runtime, the standard library, the test suite. The compiler binary in <code>bin/zetac</code> was compiled by Zeta from Zeta code. If you clone the repo and run <code>./bin/zetac src/main.z -o zetac</code>, you get the same compiler back. That's the full bootstrap loop, closed forever.
+            v1.0.1 removes every Rust source file. The <code>src/</code> directory now holds <strong>51+ pure Zeta source files</strong> — the frontend, the middle-end, the backend, the runtime, the standard library, the test suite. The compiler binary in <code>bin/zetac</code> was compiled by Zeta from Zeta code. If you clone the repo and run <code>./bin/zetac src/main.z -o zetac</code>, you get the same compiler back. That's the full bootstrap loop, closed forever.
           </p>
 
           <h2 style="color:var(--accent); margin:3rem 0 1rem; font-size:2rem;">The Language: Designed, Not Accumulated</h2>
@@ -132,7 +132,7 @@ fn max&lt;T: Ord&gt;(a: T, b: T) -> T {
 
           <h2 style="color:var(--accent); margin:3rem 0 1rem; font-size:2rem;">The Standard Library: Three Tiers, 20+ Modules</h2>
           <p style="font-size:1.2rem; margin-bottom:2rem;">
-            v1.0.0 ships with a comprehensive standard library organized in three tiers:
+            v1.0.1 ships with a comprehensive standard library organized in three tiers:
           </p>
           <ul style="font-size:1.2rem; margin:2rem 0 2rem 3rem; line-height:1.8;">
             <li><strong>Tier 1 — Core:</strong> <code>std::mem</code>, <code>std::ptr</code>, <code>std::cmp</code>, <code>std::hash</code>, <code>std::iter</code>, <code>std::vec</code>, <code>std::string</code>, <code>std::option</code>, <code>std::result</code></li>
@@ -178,7 +178,7 @@ fn max&lt;T: Ord&gt;(a: T, b: T) -> T {
             Every new systems language promises to be better than C. Most deliver marginal improvements at the cost of complexity — lifetimes, borrow checkers, trait gymnastics, build system baggage. Zeta doesn't play that game.
           </p>
           <p style="font-size:1.2rem; margin-bottom:2rem;">
-            v1.0.0 proves that a language can be <strong>minimal, safe, fast, and self-hosting</strong> without sacrificing any of those properties. The compiler compiles itself in milliseconds. The binaries are kilobytes. The feature set is comprehensive but not bloated. The standard library covers everything you need to build real software — networking, filesystems, threading, SIMD, WebAssembly.
+            v1.0.1 proves that a language can be <strong>minimal, safe, fast, and self-hosting</strong> without sacrificing any of those properties. The compiler compiles itself in milliseconds. The binaries are kilobytes. The feature set is comprehensive but not bloated. The standard library covers everything you need to build real software — networking, filesystems, threading, SIMD, WebAssembly.
           </p>
           <p style="font-size:1.2rem; margin-bottom:2rem;">
             This is not a research project. This is not a toy. This is a production-ready systems programming language that ships today.
@@ -199,13 +199,13 @@ cd zeta
           </blockquote>
 
           <p style="font-size:1.2rem; margin-bottom:3rem;">
-            v1.0.0 is the foundation. Everything builds on top from here — the package ecosystem, the MLGO integration, the SIMD autotuner, the distributed runtime. But the foundation is pure Zeta, and it will never need to be laid again.
+            v1.0.1 is the foundation. Everything builds on top from here — the package ecosystem, the MLGO integration, the SIMD autotuner, the distributed runtime. But the foundation is pure Zeta, and it will never need to be laid again.
           </p>
           <p style="font-size:1.2rem; margin-bottom:3rem;">
             Download it. Try it. Break it. Tell us what you think on GitHub. The future of systems programming isn't coming — it's here, it's self-hosted, and it's called Zeta.
           </p>
           <p style="margin-top:3rem;">
-            <a href="https://github.com/murphsicles/zeta/releases/tag/v1.0.0" class="btn primary">Download v1.0.0</a>
+            <a href="https://github.com/murphsicles/zeta/releases/tag/v1.0.1" class="btn primary">Download v1.0.1</a>
             <a href="play.html" class="btn secondary" style="margin-left:1rem;">Try in Playground</a>
             <a href="https://github.com/murphsicles/zeta" class="btn secondary" style="margin-left:1rem;" target="_blank">GitHub Repository</a>
           </p>

@@ -1,13 +1,14 @@
+
 <!-- downloads.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Zeta Downloads – install the fastest self-hosting systems compiler with one-line installer or pre-built binaries.">
+  <meta name="description" content="Zeta Downloads – install the self-hosting systems compiler with one-line installer or pre-built binaries.">
   <meta name="keywords" content="zeta download, zeta installer, zeta compiler">
   <meta property="og:title" content="Zeta Downloads">
-  <meta property="og:description" content="Get Zeta v0.3.0 – the final systems language with unbeatable compile times.">
+  <meta property="og:description" content="Get Zeta v1.0.1 – the foundational Pure Zeta release.">
   <meta property="og:image" content="https://z-lang.org/assets/images/z256.png">
   <meta property="og:url" content="https://z-lang.org/downloads.html">
   <meta property="og:type" content="website">
@@ -41,25 +42,46 @@
     <section class="hero">
       <div class="container">
         <img src="assets/images/z180.png" alt="Zeta Logo" class="hero-logo">
-        <p class="tagline">Install the compiler and toolchain</p>
+        <p class="tagline">Install the Zeta compiler</p>
         <div class="install-options">
           <div class="install-card">
-            <h2>One-line installer (macOS / Linux / WSL)</h2>
-            <pre><code>curl -fsSL https://z-lang.org/install.sh | sh</code></pre>
-            <p>Adds <code>zeta</code> to PATH automatically.</p>
-          </div>
-          <div class="install-card">
-            <h2>Via Cargo (requires Rust)</h2>
-            <pre><code>cargo install zetac</code></pre>
-            <p>Installs latest from crates.io.</p>
-          </div>
-          <div class="install-card">
             <h2>Pre-built binaries</h2>
-            <a href="https://github.com/murphsicles/zeta/releases" target="_blank" class="btn primary">GitHub Releases</a>
-            <p>Static binaries for Linux, MacOS, Windows.</p>
+            <div class="download-buttons">
+              <a href="https://github.com/murphsicles/zeta/raw/main/bin/zetac" class="btn primary" download>
+                <span class="icon">🐧</span> Linux (x86_64)
+              </a>
+              <a href="https://github.com/murphsicles/zeta/raw/main/bin/zetac-macos-arm64" class="btn primary" download>
+                <span class="icon">🍎</span> macOS (ARM64)
+              </a>
+              <a href="https://github.com/murphsicles/zeta/raw/main/bin/zetac-macos-x64" class="btn primary" download>
+                <span class="icon">🍎</span> macOS (x86_64)
+              </a>
+              <a href="https://github.com/murphsicles/zeta/raw/main/bin/zetac.exe" class="btn primary" download>
+                <span class="icon">🪟</span> Windows (x86_64)
+              </a>
+            </div>
+            <p class="note">Static binaries — no dependencies required beyond your system's LLVM installation.</p>
+          </div>
+          <div class="install-card">
+            <h2>From the repository</h2>
+            <p>Clone the <code>bootstrap</code> branch for the Rust bootstrap compiler:</p>
+            <pre><code>git clone -b bootstrap https://github.com/murphsicles/zeta.git
+cd zeta
+cargo build --release
+./target/release/zetac --help</code></pre>
+          </div>
+          <div class="install-card">
+            <h2>Prerequisites</h2>
+            <p>Zeta uses LLVM 21 for code generation. Install it via your package manager:</p>
+            <p><strong>macOS (Homebrew)</strong></p>
+            <pre><code>brew install llvm@21</code></pre>
+            <p><strong>Ubuntu/Debian</strong></p>
+            <pre><code>sudo apt install llvm-21 llvm-21-dev</code></pre>
+            <p><strong>Windows (Chocolatey)</strong></p>
+            <pre><code>choco install llvm --version=21.0.0</code></pre>
           </div>
         </div>
-        <p class="note">Latest stable: v0.3.0 • <a href="docs.html">Full install guide →</a></p>
+        <p class="note">Latest stable: v1.0.1 • <a href="docs.html">Full install guide →</a></p>
       </div>
     </section>
   </main>
